@@ -1,8 +1,12 @@
 import React from "react";
 import NavberWeb from "../Navber/NavberWeb";
 import Footer from "../Footer";
+import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const ViewProduct = () => {
+    const { WebUser, WebUserloading } = useAuth();
+    console.log(WebUser);
   const product = {
     _id: "1",
     title: "প্লেন গেম এপপ্স",
@@ -24,6 +28,7 @@ const ViewProduct = () => {
   };
 
   const {
+    _id,
     imageUrls,
     title,
     categoryName,
@@ -81,7 +86,14 @@ const ViewProduct = () => {
               </div>
             )}
 
-            <button className="btn bg-green-700 text-white mt-4 md:w-60 w-full">এখনি কিনুন</button>
+{
+    WebUser ? <>
+    <Link to={`/product/checkout/${_id}`} className="btn bg-green-700 text-white mt-4 md:w-60 w-full">এখনি কিনুন</Link>
+    </> : <>
+    <Link to={`/user/auth/login`} className="btn bg-green-700 text-white mt-4 md:w-60 w-full">লগইন করুন</Link>
+    </>
+}
+            
           </div>
         </div>
 

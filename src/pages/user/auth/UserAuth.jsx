@@ -5,8 +5,9 @@ import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 import { softInfo } from '../../../utils/info';
-import { ErrorToast } from '../../../utils/Toastify';
+import { ErrorToast, SuccessToast } from '../../../utils/Toastify';
 import ScreenLoad from '../../../components/ScreenLoad';
+import NavberWeb from '../../../components/website/Navber/NavberWeb';
 
 const UserAuth = () => {
 
@@ -38,14 +39,13 @@ const UserAuth = () => {
 
 
     const onSubmit = async (data) => {
-        const uit = localStorage.getItem('uit')
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/login`, { email: data.email, password: data.password ,uit});
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/login`, { email: data.email, password: data.password});
             setLodding(true)
             if (response.data.auth === true) {
-                localStorage.setItem('uid', response.data.email);
+                SuccessToast('Login Success')
                 setTimeout(() => {
-                    window.location.href = '/user/auth/dashboard/home';
+                    window.location.href = '/';
                     setLodding(false)
                 }, 2000)
             } else {
@@ -65,6 +65,7 @@ const UserAuth = () => {
 
     return (
         <>
+        <NavberWeb></NavberWeb>
             <div>
                 {lodding && <ScreenLoad></ScreenLoad>}
             </div>
@@ -111,6 +112,8 @@ const UserAuth = () => {
                 </div>
                 <ToastContainer></ToastContainer>
             </div>
+
+            
         </>
     );
 };

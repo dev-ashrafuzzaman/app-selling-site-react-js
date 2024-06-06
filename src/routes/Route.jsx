@@ -47,6 +47,7 @@ import DailyChecking from "../pages/user/dashboard/DailyEarn/DailyChecking";
 import AddVisitEarn from "../pages/dashboard/ManageVisitEarn/AddVisitEarn";
 import ManageVisitEarn from "../pages/dashboard/ManageVisitEarn/ManageVisitEarn";
 import ViewProduct from "../components/website/Products/ViewProduct";
+import Checkout from "../components/website/Checkout/Checkout";
 
 export const router = createBrowserRouter([
     {
@@ -67,7 +68,12 @@ export const router = createBrowserRouter([
     },
     {
         path: 'product/details/:id',
-        element: <ViewProduct></ViewProduct>,
+        element: <PrivateRoute><ViewProduct></ViewProduct></PrivateRoute>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/web/public/job/${params.id}`)
+    },
+    {
+        path: 'product/checkout/:id',
+        element: <PrivateRoute><Checkout></Checkout></PrivateRoute>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/web/public/job/${params.id}`)
     },
     {

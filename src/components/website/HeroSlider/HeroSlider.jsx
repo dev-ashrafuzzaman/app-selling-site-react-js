@@ -10,7 +10,7 @@ import Category from "../Category";
 import AllProducts from "../Products/AllProducts";
 import Footer from "../Footer";
 
-const HeroSlider = () => {
+const HeroSlider = ({data, products,categorys}) => {
   return (
 
     <div className="max-w-screen-2xl mx-auto rounded-3xl md:h-[100px] h-[200px]">
@@ -26,20 +26,20 @@ const HeroSlider = () => {
         }}
         modules={[Autoplay, Pagination]}
         className="mySwiper rounded-3xl">
-        {mainSlider?.map((slider, index) => (
+        {data?.banner?.map((slider, index) => (
           <SwiperSlide key={index}>
             <img
               className="w-full rounded-3xl  md:h-[500px] h-[200px]"
-              src={slider?.bg}
+              src={`${import.meta.env.VITE_BASE_URL}${slider}`}
               alt=""
             />
           </SwiperSlide>
         ))}
       </Swiper>
-      <HeadNotice></HeadNotice>
-      <ContactSection></ContactSection>
-      <Category></Category>
-      <AllProducts></AllProducts>
+      <HeadNotice notice={data?.notice}></HeadNotice>
+      <ContactSection telegram={data?.telegram} whatsapp={data?.whatsapp} youtube={data?.youtube} ></ContactSection>
+      <Category categorys={categorys}></Category>
+      <AllProducts products={products}></AllProducts>
       <Footer></Footer>
     </div>
   );

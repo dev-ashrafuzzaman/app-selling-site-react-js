@@ -8,7 +8,9 @@ body {
   font-family: "Noto Sans Bengali", sans-serif !important;
 }
 
-
+.no-scroll {
+  overflow: hidden;
+}
 
 
 

@@ -21,9 +21,6 @@ const UserAuthRegister = () => {
     const [visibleConPass, setvisibleConPass] = useState(false)
     const [lodding, setLodding] = useState(false);
 
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const code = params.get('inviteCode');
 
 
     const handleOnFocusName = (value) => {
@@ -57,37 +54,31 @@ const UserAuthRegister = () => {
     }
 
     const onSubmit = async (data) => {
-        const UserIt = localStorage.getItem('uit')
-        if (UserIt) {
-            ErrorToast('User Already Exists')
-        } else {
-            try {
-                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/register`, {
-                    email: data.email,
-                    phone: data.phone, password: data.password,
-                    name: data.name, referId: data?.referId
-                });
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/register`, {
+                email: data.email,
+                phone: data.phone, password: data.password,
+                name: data.name, 
+            });
 
-                setLodding(true)
-                if (response.data.auth === true) {
-                    localStorage.setItem('uit', response.data.uit)
-                    SuccessToast('Account Create Success')
-                    setTimeout(() => {
-                        navigate('/user/auth/login');
-                        setLodding(false)
-                    }, 1000)
-                } else {
-                    setTimeout(() => {
-                        ErrorToast(response.data.Error)
-                        setLodding(false)
-                    }, 1000)
-                }
-            } catch (error) {
+            setLodding(true)
+            if (response.data.auth === true) {
+                SuccessToast('Account Create Success')
                 setTimeout(() => {
-                    ErrorToast('Server Error!')
+                    navigate('/user/auth/login');
+                    setLodding(false)
+                }, 1000)
+            } else {
+                setTimeout(() => {
+                    ErrorToast(response.data.Error)
                     setLodding(false)
                 }, 1000)
             }
+        } catch (error) {
+            setTimeout(() => {
+                ErrorToast('Server Error!')
+                setLodding(false)
+            }, 1000)
         }
     }
 
@@ -160,11 +151,7 @@ const UserAuthRegister = () => {
 
                             {errors.confirmPassword?.type === 'required' && <span className=" text-red-600">Passwords are not same</span>}
                             {/* Type referId */}
-                            <p className={`text-slate-400 ${errors.referId && 'text-red-500'}  `}>Refer Id</p>
-                            <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.referId && 'border-red-500 hover:border-red-500'}`}>
-                                <input {...register("referId",)} defaultValue={code} type="text" placeholder="Refer Id" className="font-semibold border-none outline-none  w-full" />
-                            </div>
-                            {/* {errors.referId && <span className=" text-red-600">ReferId is required</span>} */}
+                       
 
                             {/* Forgot Password Area */}
                             <div className="flex justify-between items-center">

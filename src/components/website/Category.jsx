@@ -1,17 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Category = () => {
-  const categorys = [
-    {
-      _id: "6650aabd63490d2bca547c21",
-      name: "এপস ",
-    },
-    {
-      _id: "6650aabd63490d2bca547c22",
-      name: "ওয়েবসাইট",
-    },
-  ];
+const Category = ({categorys}) => {
   return (
     
       <div className="grid grid-cols-2 gap-5 mb-5 my-5">
