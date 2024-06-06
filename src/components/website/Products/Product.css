@@ -1,0 +1,24 @@
+.hoverCard {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hoverCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hoverCard img {
+    transition: transform 0.3s ease;
+  }
+  
+  .hoverCard:hover img {
+    transform: scale(1.05);
+  }
+  
+  .hoverCard .card-title {
+    transition: color 0.3s ease;
+  }
+  
+  .hoverCard:hover .card-title {
+    color: #4CAF50; /* Change the color to any preferred hover color */
+  }

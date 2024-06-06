@@ -8,6 +8,7 @@ const App = () => {
       <div className="px-2">
         <HeroSlider></HeroSlider>
       </div>
+     
     </>
   );
 };

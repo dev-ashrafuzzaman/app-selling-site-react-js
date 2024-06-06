@@ -1,11 +1,11 @@
-@import url('https://fonts.maateen.me/mukti/font.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
 body {
-  font-family: 'Mukti', Arial, sans-serif !important;
+  font-family: "Noto Sans Bengali", sans-serif !important;
 }
 
 

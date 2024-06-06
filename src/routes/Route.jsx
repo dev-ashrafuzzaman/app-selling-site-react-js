@@ -46,6 +46,7 @@ import WorkHistory from "../pages/user/dashboard/WorkHistory/WorkHistory";
 import DailyChecking from "../pages/user/dashboard/DailyEarn/DailyChecking";
 import AddVisitEarn from "../pages/dashboard/ManageVisitEarn/AddVisitEarn";
 import ManageVisitEarn from "../pages/dashboard/ManageVisitEarn/ManageVisitEarn";
+import ViewProduct from "../components/website/Products/ViewProduct";
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +64,11 @@ export const router = createBrowserRouter([
     {
         path: 'user/auth/register',
         element: <UserAuthRegister></UserAuthRegister>
+    },
+    {
+        path: 'product/details/:id',
+        element: <ViewProduct></ViewProduct>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/web/public/job/${params.id}`)
     },
     {
         path: 'user/auth/dashboard',

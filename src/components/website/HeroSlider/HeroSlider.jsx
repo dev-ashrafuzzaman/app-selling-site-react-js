@@ -4,11 +4,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import mainSlider from "../../../data/mainSlider";
+import HeadNotice from "../HeadNotice/HeadNotice";
+import ContactSection from "../ContactSection";
+import Category from "../Category";
+import AllProducts from "../Products/AllProducts";
+import Footer from "../Footer";
 
 const HeroSlider = () => {
   return (
-    <section className="max-w-screen-2xl mx-auto rounded-3xl md:h-[100px] h-[200px]">
-      <Swiper
+
+    <div className="max-w-screen-2xl mx-auto rounded-3xl md:h-[100px] h-[200px]">
+         <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -22,11 +28,20 @@ const HeroSlider = () => {
         className="mySwiper rounded-3xl">
         {mainSlider?.map((slider, index) => (
           <SwiperSlide key={index}>
-           <img className="w-full rounded-3xl  md:h-[500px] h-[200px]" src={slider?.bg} alt="" />
+            <img
+              className="w-full rounded-3xl  md:h-[500px] h-[200px]"
+              src={slider?.bg}
+              alt=""
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-    </section>
+      <HeadNotice></HeadNotice>
+      <ContactSection></ContactSection>
+      <Category></Category>
+      <AllProducts></AllProducts>
+      <Footer></Footer>
+    </div>
   );
 };
 

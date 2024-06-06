@@ -41,7 +41,7 @@ const NavberWeb = () => {
             {isDropdownOpen && (
               <ul
                 tabIndex={0}
-                className="menu border border-red-200 space-y-3 menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu border border-red-200 space-y-3 menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li className="btn btn-error btn-sm text-white">
                   <a onClick={handleMenuItemClick}>সকল সফটওয়্যার</a>
