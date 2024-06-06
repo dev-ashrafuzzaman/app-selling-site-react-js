@@ -1,0 +1,17 @@
+@import url('https://fonts.maateen.me/mukti/font.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  font-family: 'Mukti', Arial, sans-serif !important;
+}
+
+
+
+
+
+/* drop-shadow-emrald */
+
+
