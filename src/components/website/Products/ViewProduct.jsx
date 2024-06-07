@@ -1,32 +1,12 @@
 import React from "react";
 import NavberWeb from "../Navber/NavberWeb";
 import Footer from "../Footer";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 const ViewProduct = () => {
-    const { WebUser, WebUserloading } = useAuth();
-    console.log(WebUser);
-  const product = {
-    _id: "1",
-    title: "প্লেন গেম এপপ্স",
-    categoryId: "6650aabd63490d2bca547c21",
-    categoryName: "এপপ্স",
-    imageUrls: [
-      "https://hotpot.ai/designs/thumbnails/samsung-s10-screenshot/43.jpg",
-      "https://i.ibb.co/MZrj9bB/039cc9159167787-Y3-Jvc-Cwx-MDU1-LDgy-NSww-LDEz.jpg",
-    ],
-    price: 10,
-    details: `Step up your style game with the iconic Levi's 501 Jeans. With their classic straight leg fit, 100% cotton denim, and button fly closure, these jeans offer timeless appeal and unmatched comfort.`,
-    features: ["ok", "ok", "ok", "ok", "ok"],
-    estimateDelivary: "2",
-    demoLink: "https://wedonext.com",
-    password: "123456",
-    userName: "admin@gmail.com",
-    demo: true,
-    video: "https://www.youtube.com/",
-  };
-
+  const product = useLoaderData();
+  const { WebUser } = useAuth();
   const {
     _id,
     imageUrls,
@@ -40,15 +20,17 @@ const ViewProduct = () => {
     password,
     video,
     details,
+    categoryId,
+    pricePackage,
   } = product;
   return (
     <div>
       <NavberWeb></NavberWeb>
-      <div className="max-w-screen-2xl mx-auto px-2">
+      <div className="max-w-screen-2xl mx-auto px-2 pt-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <figure className="bg-slate-100 p-4 rounded-xl">
             <img
-              src={imageUrls[0]}
+              src={`${import.meta.env.VITE_BASE_URL}${imageUrls[0]}`}
               alt={title}
               className="mx-auto  object-cover rounded-md"
             />
@@ -58,9 +40,21 @@ const ViewProduct = () => {
               <h2 className="card-title text-3xl">{title}</h2>
               <p className="text-xl font-semibold">ধরণ: {categoryName}</p>
               {/* <h3 className="card-title text-xl">brand: {brand}</h3> */}
-              <h3 className="text-xl font-semibold text-green-700 mb-4">
-                মূল্য: {price} টাকা
-              </h3>
+              <div className="text-xl font-semibold text-green-700 mb-4">
+                মূল্য:{" "}
+                {categoryId == "6650aabd63490d2bca547c21" ? (
+                  price
+                ) : (
+                  <>
+                    {pricePackage?.map((item, index) => (
+                      <li key={index}>
+                        {item.name} -- {item.price} টাকা
+                      </li>
+                    ))}
+                  </>
+                )}{" "}
+                
+              </div>
             </div>
             <div className="my-4">
               <h3 className="text-3xl font-semibold">বৈশিষ্ট্য</h3>
@@ -86,14 +80,23 @@ const ViewProduct = () => {
               </div>
             )}
 
-{
-    WebUser ? <>
-    <Link to={`/product/checkout/${_id}`} className="btn bg-green-700 text-white mt-4 md:w-60 w-full">এখনি কিনুন</Link>
-    </> : <>
-    <Link to={`/user/auth/login`} className="btn bg-green-700 text-white mt-4 md:w-60 w-full">লগইন করুন</Link>
-    </>
-}
-            
+            {WebUser ? (
+              <>
+                <Link
+                  to={`/product/checkout/${_id}`}
+                  className="btn bg-green-700 text-white mt-4 md:w-60 w-full">
+                  এখনি কিনুন
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to={`/user/auth/login`}
+                  className="btn bg-green-700 text-white mt-4 md:w-60 w-full">
+                  লগইন করুন
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

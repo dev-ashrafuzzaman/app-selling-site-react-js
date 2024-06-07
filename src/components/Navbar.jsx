@@ -89,7 +89,7 @@ const Navbar = ({ toggled, setToggled }) => {
                                         <p className="flex justify-center items-center gap-2"><FaUsers></FaUsers> {"অ্যাডমিন"}</p>
                                     </a>
                                 </li>
-                                <li onClick={() => HandleLogout()}><a><p className="flex justify-center items-center gap-2"><MdLogout></MdLogout>লগ আউট</p></a></li>
+                                <li onClick={() => HandleLogout()}><p className="flex justify-center items-center gap-2"><MdLogout></MdLogout>লগ আউট</p></li>
                             </ul>
                         </div>
                     </ul>

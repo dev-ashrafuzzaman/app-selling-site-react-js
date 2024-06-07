@@ -42,10 +42,9 @@ const Footer = () => {
         <div className="md:block hidden">
           <h1 className="text-xl md:text-3xl font-bold">যোগাযোগ</h1>
           <div className="mt-4 md:text-xl space-y-4">
-            <p>ঢাকা , বাংলাদেশ</p>
+            <p>ঢাকা,টাঙ্গাইল,বাংলাদেশ</p>
             <p>info@fasterappmaker.com</p>
-            <p>+৮৮০২৫২৫২২৫৫</p>
-            <p>+৮৮০১৭১১৩৪২২৫৫</p>
+            <p>+৮৮ ০১৭৪৪৫৩৪৯১২</p>
           </div>
         </div>
       </div>

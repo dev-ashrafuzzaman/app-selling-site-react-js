@@ -6,7 +6,6 @@ import useWebUtils from "./hooks/web/useWebUtils";
 
 const App = () => {
   const webUtils = useWebUtils();
-  console.log(webUtils);
 
   const isScreenLoadVisible =
     webUtils?.loading || webUtils?.data === null || webUtils?.error;
@@ -28,7 +27,7 @@ const App = () => {
     <>
       {isScreenLoadVisible && <ScreenLoad />}
       <NavberWeb></NavberWeb>
-      <div className="px-2">
+      <div className="px-2 pt-24">
         <HeroSlider
           data={webUtils?.data?.result}
           categorys={webUtils?.data?.categorys}
