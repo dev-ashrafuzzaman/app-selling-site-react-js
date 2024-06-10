@@ -6,6 +6,7 @@ import useWebUtils from "./hooks/web/useWebUtils";
 
 const App = () => {
   const webUtils = useWebUtils();
+  console.log(webUtils);
 
   const isScreenLoadVisible =
     webUtils?.loading || webUtils?.data === null || webUtils?.error;

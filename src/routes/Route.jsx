@@ -42,13 +42,14 @@ import ManageDirectLinks from "../pages/dashboard/ManageDirectLinks/ManageDirect
 import SubmitDirectLink from "../pages/dashboard/ManageDirectLinks/SubmitDirectLink";
 import WorkHistory from "../pages/user/dashboard/WorkHistory/WorkHistory";
 import DailyChecking from "../pages/user/dashboard/DailyEarn/DailyChecking";
-import AddVisitEarn from "../pages/dashboard/ManageVisitEarn/AddVisitEarn";
-import ManageVisitEarn from "../pages/dashboard/ManageVisitEarn/ManageVisitEarn";
+import AddVisitEarn from "../pages/dashboard/ManageBanner/AddVisitEarn";
+import ManageVisitEarn from "../pages/dashboard/ManageBanner/ManageVisitEarn";
 import ViewProduct from "../components/website/Products/ViewProduct";
 import Checkout from "../components/website/Checkout/Checkout";
 import Orders from "../components/website/Orders/Orders";
 import AllProducts from "../components/website/Products/AllProducts";
 import Products from "../components/website/Products/Products";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ export const router = createBrowserRouter([
     element: <App></App>,
   },
   {
-    path: "admin/auth/validation",
+    path: "leery/admin/auth/validation",
     element: <Login></Login>,
   },
   {
@@ -205,11 +206,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "leery/admin/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <AdminRoute><Dashboard></Dashboard></AdminRoute>,
     children: [
       {
         path: "home",
-        element: <Home></Home>,
+        element: <AdminRoute><Home></Home></AdminRoute>,
       },
       {
         path: "add-user",
@@ -282,11 +283,11 @@ export const router = createBrowserRouter([
         element: <SubmitDirectLink></SubmitDirectLink>,
       },
       {
-        path: "add-visit-earn",
+        path: "add-banner",
         element: <AddVisitEarn></AddVisitEarn>,
       },
       {
-        path: "manage-visit-earn",
+        path: "manage-banner",
         element: <ManageVisitEarn></ManageVisitEarn>,
       },
       {

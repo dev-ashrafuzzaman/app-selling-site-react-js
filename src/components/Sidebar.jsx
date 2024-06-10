@@ -25,7 +25,7 @@ const SidebarComponent = ({ toggled, setToggled }) => {
       <Menu
         rootStyles={{
           ['.' + menuClasses.button]: {
-            color: `${softInfo.textCode}`,
+            color: `${softInfo.colorCode}`,
             '&:hover': {
               backgroundColor: `${softInfo.hoverCode}`,
             },
@@ -34,19 +34,16 @@ const SidebarComponent = ({ toggled, setToggled }) => {
         menuItemStyles={{
           button: {
             [`&.active`]: {
-              backgroundColor: `${softInfo.colorCode}`,
-              color: `${softInfo.hovertextCode}`,
+              backgroundColor: `${softInfo.hoverCode}`,
+              color: `${softInfo.colorCode}`,
             },
           },
         }}
       >
         <div>
           <div className="p-4 pb-8 flex justify-between items-center">
-            <img
-              src={softInfo.logo} alt="Leery iT"
-              className={`${collapsed ? "hidden" : "w-40"
-                }`}
-            />
+           <h2  className={`${collapsed ? "hidden" : "w-40 font-bold text-lg"
+                }`}>Faster App Maker</h2>
             <button
               onClick={() => setCollapsed((curr) => !curr)}
               className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 absolute end-0"
@@ -77,9 +74,9 @@ const SidebarComponent = ({ toggled, setToggled }) => {
           <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-direct-link" />}>Manage</MenuItem>
           <MenuItem icon={<MdDoneOutline></MdDoneOutline>} component={<NavLink to="/leery/admin/dashboard/user-direct-link-submit" />}>User Submit</MenuItem>
         </SubMenu>
-        <SubMenu label="Visit Earn" icon={<MdViewList></MdViewList>}>
-          <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-visit-earn" />}>Add</MenuItem>
-          <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-visit-earn" />}>Manage</MenuItem>
+        <SubMenu label="Banner" icon={<MdViewList></MdViewList>}>
+          <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-banner" />}>Add</MenuItem>
+          <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-banner" />}>Manage</MenuItem>
         </SubMenu>
         <MenuItem icon={<MdLink></MdLink>} component={<NavLink to="/leery/admin/dashboard/web-setup" />}>Web Setup</MenuItem>
         {/* <MenuItem icon={<MdLocalOffer></MdLocalOffer>} component={<NavLink to="/leery/admin/dashboard/packages" />}>Packages</MenuItem> */}

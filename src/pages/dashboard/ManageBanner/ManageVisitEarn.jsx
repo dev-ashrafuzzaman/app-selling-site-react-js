@@ -29,7 +29,7 @@ const ManageVisitEarn = () => {
 
     return (
         <div className='px-8'>
-            <SectionTitle heading={'Manage Visit Earn'}></SectionTitle>
+            <SectionTitle heading={'Manage Banner'}></SectionTitle>
 
             {/* Search Page Select and Refresh Section*/}
             <TableTopSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} refetch={refetch}></TableTopSearch>
@@ -41,11 +41,8 @@ const ManageVisitEarn = () => {
                         <thead className='font-bold text-black text-sm'>
                             <tr>
                                 <th className='border-b-2 border-black w-1'>#</th>
-                                <th className='border-b-2 border-black w-1'>Link</th>
-                                <th className='border-b-2 border-black w-1'>Title</th>
-                                <th className='border-b-2 border-black w-1'>Published</th>
-                                <th className='border-b-2 border-black w-1'>Total Attempt</th>
-                                <th className='border-b-2 border-black w-1'>Amount</th>
+                                <th className='border-b-2 border-black w-1'>Banner</th>
+                                <th className='border-b-2 border-black w-1'>Status</th>
                                 <th className='border-b-2 border-black w-1'>Action</th>
                             </tr>
                         </thead>

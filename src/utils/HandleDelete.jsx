@@ -60,14 +60,12 @@ export const HandleDeleteWithSingleImg = async (axiosSecure, refetch , info, rou
     });
 
     if (result.isConfirmed) {
-        const filenamesToDelete = [info?.prof];
+        const filenamesToDelete = [info?.url];
         const response = await axiosSecure.delete(`/public/upload/delete` , { data: { filenames: filenamesToDelete } });
         if(response.data.delete == true){
-            const data = await axiosSecure.delete(`/api/v1/admin/${route}/${info._id}`);
-            if (data.data.deletedCount > 0) {
-                refetch()
-                SuccessToast('Delete Success')
-            }
+            await axiosSecure.delete(`/api/v1/admin/${route}/${info._id}`);
+            refetch()
+            SuccessToast('Delete Success')
         } else{
             ErrorToast('Image Delete Failed')
         }
