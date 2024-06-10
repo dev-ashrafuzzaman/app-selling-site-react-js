@@ -18,12 +18,16 @@ const ManageCustomer = () => {
     const { isCustomer, refetch, isCustomerLoading } = useCustomer(currentPage, pageSize, searchQuery);
     const [totalCount, setTotalCount] = useState(0);
     const totalPages = Math.ceil(totalCount / pageSize);
+
+
     const [passValues, setValues] = useState({
         newPass: '',
     })
     const [bonusValue, setBonusValue] = useState({
         amount: '',
     })
+
+    
     const modalRef = useRef(null);
     const [modalData, setModalData] = useState(null);
     const showModal = (data) => {

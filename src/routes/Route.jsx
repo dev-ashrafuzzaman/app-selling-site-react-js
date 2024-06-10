@@ -50,6 +50,7 @@ import Orders from "../components/website/Orders/Orders";
 import AllProducts from "../components/website/Products/AllProducts";
 import Products from "../components/website/Products/Products";
 import AdminRoute from "./AdminRoute";
+import ManageOrder from "../pages/dashboard/ManageOrder/ManageOrder";
 
 export const router = createBrowserRouter([
   {
@@ -241,6 +242,10 @@ export const router = createBrowserRouter([
               params.id
             }`
           ),
+      },
+      {
+        path: "manage-orders",
+        element:<ManageOrder></ManageOrder>,
       },
       {
         path: "users-payment",

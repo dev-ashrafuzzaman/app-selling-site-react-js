@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Pagination from "../../utils/Pagination";
 import TopSearch from "../../utils/TopSearch";
+import Pagination from "../../utils/Pagination";
 
 const Table = ({ head, children }) => {
   const [searchQuery, setSearchQuery] = useState("");
