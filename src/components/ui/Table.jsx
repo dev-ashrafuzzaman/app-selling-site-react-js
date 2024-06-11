@@ -2,13 +2,19 @@ import { useState } from "react";
 import TopSearch from "../../utils/TopSearch";
 import Pagination from "../../utils/Pagination";
 
-const Table = ({ head, children }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalCount, setTotalCount] = useState(0);
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const refetch = {};
+const Table = ({
+  head,
+  children,
+  refetch,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+  searchQuery,
+  setSearchQuery,
+  totalPages,
+  totalCount,
+}) => {
   return (
     <>
       <div className="px-6">
@@ -19,7 +25,7 @@ const Table = ({ head, children }) => {
 
         {/* Table Section With Pagination */}
         <table className="w-full">
-            {/* THead */}
+          {/* THead */}
           <thead>
             <tr className="border bg-sky-50">
               {head?.map((item, index) => (

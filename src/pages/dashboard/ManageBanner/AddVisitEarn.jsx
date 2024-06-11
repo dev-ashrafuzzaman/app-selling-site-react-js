@@ -6,11 +6,15 @@ import { ToastContainer } from "react-toastify";
 import SectionTitle from "../../../components/SectionTitle";
 import { ErrorToast } from "../../../utils/Toastify";
 import ScreenLoad from "../../../components/ScreenLoad";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useVisitEarn from "../../../hooks/useVisitEarn";
 
 const AddVisitEarn = () => {
-  const { register, handleSubmit, reset } = useForm();
   const [axiosSecure] = useAxiosSecure();
+  const { isVisitEarn} = useVisitEarn(10, 1, '');
+
+
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -80,7 +84,8 @@ const AddVisitEarn = () => {
       {loading && <ScreenLoad></ScreenLoad>}
       <ToastContainer></ToastContainer>
       <SectionTitle heading={"Add Banner"}></SectionTitle>
-      <div className=" bg-[#F0F3F4] rounded-xl md:p-10 p-4">
+      {isVisitEarn?.data?.length >= 3 ? <><p className="text-red-500 font-bold text-center text-2xl">You Have Rech To Add Banner Max 3 Banner Add You Please Check Manage Page Thank you...</p></>: <>
+        <div className=" bg-[#F0F3F4] rounded-xl md:p-10 p-4">
         <div className="my-4 space-y-4"></div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -108,6 +113,8 @@ const AddVisitEarn = () => {
           </div>
         </form>
       </div>
+      </>}
+     
     </div>
   );
 };

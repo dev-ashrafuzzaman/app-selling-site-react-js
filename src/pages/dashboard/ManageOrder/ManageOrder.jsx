@@ -24,7 +24,7 @@ const ManageOrder = () => {
   console.log(isOrders);
   return (
     <div>
-        <SectionTitle heading={'Orders Management'}></SectionTitle>
+      <SectionTitle heading={"Orders Management"}></SectionTitle>
       <Table
         head={[
           "#",
@@ -34,7 +34,16 @@ const ManageOrder = () => {
           "Payment",
           "Status",
           "Action",
-        ]}>
+        ]}
+        refetch={refetch}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        totalPages={totalPages}
+        totalCount={totalCount}>
         {isOrders?.data?.map((item, index) => (
           <tr
             key={index}
@@ -71,9 +80,16 @@ const ManageOrder = () => {
                 <p>Email: {item.custom.email}</p>
                 <p>Pass: {item.custom.pass}</p>
                 <p>Mobile: {item.custom.mobile}</p>
-                {item.custom.package && <p className="text-red-600 font-semibold">Mobile: {item.custom.package}</p>}
-                {item.custom.package ? <p className="text-green-600 font-semibold">Website</p> : <p className="text-blue-600 font-semibold">Apps</p>}
-                
+                {item.custom.package && (
+                  <p className="text-red-600 font-semibold">
+                    Mobile: {item.custom.package}
+                  </p>
+                )}
+                {item.custom.package ? (
+                  <p className="text-green-600 font-semibold">Website</p>
+                ) : (
+                  <p className="text-blue-600 font-semibold">Apps</p>
+                )}
               </div>
             </td>
             <td className="border-2 p-2 text-center ">
@@ -90,7 +106,16 @@ const ManageOrder = () => {
               </div>
             </td>
             <td className="border-2 p-2 ">
-              <p className={`border rounded-full ${item.status == 'Pending' ? 'bg-purple-50 font text-purple-600' : item.status == 'Processing' ? 'bg-blue-50 font text-blue-600' : item.status == 'Complete' ? 'bg-green-50 font text-green-600': 'bg-red-50 font text-red-600'}`}>
+              <p
+                className={`border rounded-full ${
+                  item.status == "Pending"
+                    ? "bg-purple-50 font text-purple-600"
+                    : item.status == "Processing"
+                    ? "bg-blue-50 font text-blue-600"
+                    : item.status == "Complete"
+                    ? "bg-green-50 font text-green-600"
+                    : "bg-red-50 font text-red-600"
+                }`}>
                 {item.status}
               </p>
             </td>
