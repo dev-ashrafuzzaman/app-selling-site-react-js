@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import SectionTitle from "../../../components/SectionTitle";
 import { ErrorToast } from "../../../utils/Toastify";
 import ScreenLoad from "../../../components/ScreenLoad";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useVisitEarn from "../../../hooks/useVisitEarn";
 
 const AddVisitEarn = () => {

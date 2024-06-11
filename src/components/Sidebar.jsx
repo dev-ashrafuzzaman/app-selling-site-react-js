@@ -74,6 +74,10 @@ const SidebarComponent = ({ toggled, setToggled }) => {
           <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-direct-link" />}>Manage</MenuItem>
           <MenuItem icon={<MdDoneOutline></MdDoneOutline>} component={<NavLink to="/leery/admin/dashboard/user-direct-link-submit" />}>User Submit</MenuItem>
         </SubMenu> */}
+        <SubMenu label="Product" icon={<MdViewList></MdViewList>}>
+          <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-product" />}>Add</MenuItem>
+          <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-products" />}>Manage</MenuItem>
+        </SubMenu>
         <SubMenu label="Banner" icon={<MdViewList></MdViewList>}>
           <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-banner" />}>Add</MenuItem>
           <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-banner" />}>Manage</MenuItem>

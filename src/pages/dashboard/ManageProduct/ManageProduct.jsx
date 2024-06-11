@@ -3,12 +3,13 @@ import Table from "../../../components/ui/Table";
 import {  FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../../components/SectionTitle";
+import useProducts from "../../../hooks/useProducts";
 
-const ManageOrder = () => {
+const ManageProduct = () => {
   const {
-    isOrders,
+    isProducts,
     refetch,
-    isOrdersLoading,
+    isProductsLoading,
     currentPage,
     setCurrentPage,
     pageSize,
@@ -17,12 +18,12 @@ const ManageOrder = () => {
     setSearchQuery,
     totalPages,
     totalCount,
-  } = useOrders();
+  } = useProducts();
 
-  console.log(isOrders);
+  console.log(isProducts);
   return (
     <div>
-      <SectionTitle heading={"Orders Management"}></SectionTitle>
+      <SectionTitle heading={"Product Management"}></SectionTitle>
       <Table
         head={[
           "#",
@@ -42,14 +43,14 @@ const ManageOrder = () => {
         setSearchQuery={setSearchQuery}
         totalPages={totalPages}
         totalCount={totalCount}>
-        {isOrders?.data?.map((item, index) => (
+        {isProducts?.data?.map((item, index) => (
           <tr
             key={index}
             className="border-2 hover:bg-slate-100 text-lg text-center">
             <th className="border-2 p-2">{index + 1}</th>
             <td className="border-2 p-2">
               <a
-                href={`/leery/admin/dashboard/track-user/${item.uId}`}
+                href={`/leery/admin/dashboard/track-user/${item?.uId}`}
                 className="text-sky-600 font-bold cursor-pointer p-2"
                 target="_blank">
                 {item?.uId}
@@ -60,30 +61,30 @@ const ManageOrder = () => {
                 <a
                   className="text-sky-600 font-bold cursor-pointer p-2"
                   target="_blank"
-                  href={`/leery/admin/dashboard/product/${item.product.categoryId}`}>
+                  href={`/leery/admin/dashboard/product/${item?.product?.categoryId}`}>
                   View Details
                 </a>
-                <p className="font-bold">{item.product.title}</p>
-                <p>Price: {item.product.price}</p>
+                <p className="font-bold">{item?.product?.title}</p>
+                <p>Price: {item?.product?.price}</p>
               </div>
             </td>
             <td className="border-2 p-2">
               <div className="flex flex-col justify-center items-center">
                 <img
                   className="w-16 "
-                  src={`${import.meta.env.VITE_BASE_URL}${item.custom.logo}`}
+                  src={`${import.meta.env.VITE_BASE_URL}${item?.custom?.logo}`}
                   alt=""
                 />
-                <p>Name: {item.custom.name}</p>
-                <p>Email: {item.custom.email}</p>
-                <p>Pass: {item.custom.pass}</p>
-                <p>Mobile: {item.custom.mobile}</p>
-                {item.custom.package && (
+                <p>Name: {item?.custom?.name}</p>
+                <p>Email: {item?.custom?.email}</p>
+                <p>Pass: {item?.custom?.pass}</p>
+                <p>Mobile: {item?.custom?.mobile}</p>
+                {item?.custom?.package && (
                   <p className="text-red-600 font-semibold">
-                    Mobile: {item.custom.package}
+                    Mobile: {item?.custom?.package}
                   </p>
                 )}
-                {item.custom.package ? (
+                {item?.custom?.package ? (
                   <p className="text-green-600 font-semibold">Website</p>
                 ) : (
                   <p className="text-blue-600 font-semibold">Apps</p>
@@ -93,14 +94,14 @@ const ManageOrder = () => {
             <td className="border-2 p-2 text-center ">
               <div>
                 <p>
-                  {item.payment.method} -- {item.payment.type}
+                  {item?.payment?.method} -- {item?.payment?.type}
                 </p>
-                <p>{item.payment.number}</p>
+                <p>{item?.payment?.number}</p>
                 <p></p>
                 <p className="font-bold">
-                  TransactionId: {item.payment.transactionId}
+                  TransactionId: {item?.payment?.transactionId}
                 </p>
-                <p>Order Time: {item.orderTime}</p>
+                <p>Order Time: {item?.orderTime}</p>
               </div>
             </td>
             <td className="border-2 p-2 ">
@@ -114,19 +115,19 @@ const ManageOrder = () => {
                     ? "bg-green-50 font text-green-600"
                     : "bg-red-50 font text-red-600"
                 }`}>
-                {item.status}
+                {item?.status}
               </p>
             </td>
             {/* Action Area */}
             <th className="flex flex-col justify-center items-center gap-2 p-2">
               <button
                 className={`btn-xs p-1 rounded-md has-tooltip  text-white ${
-                  item.status === true ? "btn-success" : "bg-slate-300"
+                  item?.status === true ? "btn-success" : "bg-slate-300"
                 }`}>
                 <FaPowerOff></FaPowerOff>
               </button>
               <Link
-                to={`/leery/admin/dashboard/track-user/${item._id}`}
+                to={`/leery/admin/dashboard/track-user/${item?._id}`}
                 className="btn-xs has-tooltip p-1 rounded-md bg-secondary text-white">
                 <FaEdit></FaEdit>
               </Link>
@@ -141,4 +142,4 @@ const ManageOrder = () => {
   );
 };
 
-export default ManageOrder;
+export default ManageProduct;

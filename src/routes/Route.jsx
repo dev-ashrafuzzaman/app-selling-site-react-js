@@ -51,6 +51,8 @@ import AllProducts from "../components/website/Products/AllProducts";
 import Products from "../components/website/Products/Products";
 import AdminRoute from "./AdminRoute";
 import ManageOrder from "../pages/dashboard/ManageOrder/ManageOrder";
+import ManageProduct from "../pages/dashboard/ManageProduct/ManageProduct";
+import AddProduct from "../pages/dashboard/ManageProduct/AddProduct";
 
 export const router = createBrowserRouter([
   {
@@ -207,11 +209,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "leery/admin/dashboard",
-    element: <AdminRoute><Dashboard></Dashboard></AdminRoute>,
+    element: (
+      <AdminRoute>
+        <Dashboard></Dashboard>
+      </AdminRoute>
+    ),
     children: [
       {
         path: "home",
-        element: <AdminRoute><Home></Home></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <Home></Home>
+          </AdminRoute>
+        ),
       },
       {
         path: "add-user",
@@ -245,7 +255,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-orders",
-        element:<ManageOrder></ManageOrder>,
+        element: <ManageOrder></ManageOrder>,
+      },
+      {
+        path: "manage-products",
+        element: <ManageProduct></ManageProduct>,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct></AddProduct>,
       },
       {
         path: "users-payment",
