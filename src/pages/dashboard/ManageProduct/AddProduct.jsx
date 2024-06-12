@@ -15,11 +15,10 @@ const AddProduct = () => {
   const [inputText, setInputText] = useState("");
   const [description, setDescription] = useState([]);
   const [category, setCategory] = useState("");
-  const [isDemo, setIsDemo] = useState(null);
-  const [isDiscount, setIsDiscount] = useState(null);
+  const [isDemo, setIsDemo] = useState(false);
+  const [isDiscount, setIsDiscount] = useState(false);
   const navigate = useNavigate();
 
-  console.log(category);
 
   const handleChange = (e) => {
     setInputText(e.target.value);
@@ -33,13 +32,12 @@ const AddProduct = () => {
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     if (category === "") {
       alert("Category is required");
       return;
     }
-
-    setLoading(true);
-
+    
     // Check if image is provided
     if (!data.image || !data.image[0]) {
       setLoading(false);
@@ -74,12 +72,34 @@ const AddProduct = () => {
 
     try {
       const response = await axiosSecure.post("/public/upload", formData);
-      const banner = {
-        url: response.data.imageUrl,
+      const product = {
+        categoryId: category,
+        categoryName:
+          category == "6650aabd63490d2bca547c21" ? "এপপ্স" : "ওয়েবসাইট",
+        demo: isDemo,
+        demoLink: data.demoLink,
+        details: data.details,
+        discount: data.discount ? data.discount : "",
+        features: description,
+        imageUrls: [response?.data.imageUrl],
+        isDiscount: isDiscount,
+        password: data.password,
+        pricePackage:
+          category == "6650abfd63490d2bca547c24"
+            ? [
+                { name: "6 Month", price: data.halfMonth },
+                { name: "12 Month", price: data.fullMonth },
+              ]
+            : "",
+        price: parseInt(data.price) ? parseInt(data.price) : 0,
+        title: data.title,
+        userName: data.userName,
+        video: data.video,
         status: true,
       };
+
       await axiosSecure
-        .patch(`/api/v1/admin/product`, { banner })
+        .post(`/api/v1/admin/product`, { product })
         .then((data) => {
           if (data) {
             setLoading(false);
@@ -138,7 +158,7 @@ const AddProduct = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+            <div className="form-control w-full ">
               <label className="label">
                 <span className="label-text">Select Category*</span>
               </label>
@@ -157,7 +177,7 @@ const AddProduct = () => {
               )}
             </div>
             <div className="md:flex gap-6">
-              <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+              <div className="form-control w-full ">
                 <label className="label">
                   <span className="label-text">Title*</span>
                 </label>
@@ -170,7 +190,7 @@ const AddProduct = () => {
               </div>
               {category == "6650aabd63490d2bca547c21" ? (
                 <>
-                  <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                  <div className="form-control w-full ">
                     <label className="label">
                       <span className="label-text">Price*</span>
                     </label>
@@ -185,24 +205,26 @@ const AddProduct = () => {
                 </>
               ) : category == "6650abfd63490d2bca547c24" ? (
                 <>
-                  <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                  <div className="form-control w-full ">
                     <label className="label">
                       <span className="label-text">6 Month Price*</span>
                     </label>
                     <input
                       type="number"
+                      id="halfMonth"
                       defaultValue={0}
                       placeholder="Type here Amount"
                       {...register("halfMonth")}
                       className="input input-bordered w-full md:max-w-screen-2xl max-w-xs"
                     />
                   </div>
-                  <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                  <div className="form-control w-full ">
                     <label className="label">
                       <span className="label-text">12 Month Price*</span>
                     </label>
                     <input
                       type="number"
+                      id="fullMonth"
                       defaultValue={0}
                       placeholder="Type here Amount"
                       {...register("fullMonth")}
@@ -212,7 +234,7 @@ const AddProduct = () => {
                 </>
               ) : (
                 <>
-                  <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                  <div className="form-control w-full ">
                     <label className="label">
                       <span className="label-text text-red-500">Notice*</span>
                     </label>
@@ -228,7 +250,7 @@ const AddProduct = () => {
               )}
             </div>
             <div className="md:flex gap-6">
-              <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+              <div className="form-control w-full ">
                 <label className="label">
                   <span className="label-text">Video Link*</span>
                 </label>
@@ -236,13 +258,13 @@ const AddProduct = () => {
                   type="text"
                   placeholder="Type here https://www.youtube.com/"
                   {...register("video", { required: true })}
-                  className="input input-bordered w-full md:max-w-screen-2xl max-w-xs"
+                  className="input input-bordered w-full"
                 />
               </div>
             </div>
 
             <div className="md:flex gap-6">
-              <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+              <div className="form-control w-full ">
                 <label className="label">
                   <span className="label-text">Details*</span>
                 </label>
@@ -250,7 +272,7 @@ const AddProduct = () => {
                   type="text"
                   placeholder="Type here details"
                   {...register("details")}
-                  className="textarea textarea-bordered w-full md:max-w-screen-2xl max-w-xs"
+                  className="textarea textarea-bordered w-full"
                 />
               </div>
             </div>
@@ -260,19 +282,27 @@ const AddProduct = () => {
                 <label className="label">
                   <span className="label-text">Demo</span>
                 </label>
-                <input type="checkbox" defaultChecked className="checkbox" />
+                <input
+                  type="checkbox"
+                  onClick={() => setIsDemo(!isDemo)}
+                  className="checkbox"
+                />
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Discount</span>
                 </label>
-                <input type="checkbox" defaultChecked className="checkbox" />
+                <input
+                  type="checkbox"
+                  onClick={() => setIsDiscount(!isDiscount)}
+                  className="checkbox"
+                />
               </div>
             </div>
 
             {isDemo && (
               <div className="md:flex gap-6">
-                <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                <div className="form-control w-full ">
                   <label className="label">
                     <span className="label-text">Demo Link*</span>
                   </label>
@@ -283,7 +313,7 @@ const AddProduct = () => {
                     className="input input-bordered w-full md:max-w-screen-2xl max-w-xs"
                   />
                 </div>
-                <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                <div className="form-control w-full ">
                   <label className="label">
                     <span className="label-text">User Name*</span>
                   </label>
@@ -294,7 +324,7 @@ const AddProduct = () => {
                     className="input input-bordered w-full md:max-w-screen-2xl max-w-xs"
                   />
                 </div>
-                <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                <div className="form-control w-full ">
                   <label className="label">
                     <span className="label-text">Password*</span>
                   </label>
@@ -309,7 +339,7 @@ const AddProduct = () => {
             )}
             {isDiscount && (
               <div className="md:flex gap-6">
-                <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
+                <div className="form-control w-full ">
                   <label className="label">
                     <span className="label-text">Discount %*</span>
                   </label>
@@ -317,7 +347,7 @@ const AddProduct = () => {
                     type="number"
                     placeholder="Type here"
                     {...register("discount")}
-                    className="input input-bordered w-full md:max-w-screen-2xl max-w-xs"
+                    className="input input-bordered w-full"
                   />
                 </div>
               </div>
@@ -340,8 +370,9 @@ const AddProduct = () => {
           </div>
           <div className="card-actions w-full">
             <button
+            disabled={loading}
               type="submit"
-              className="px-14 text-base w-full text-center  bg-[#18BE71] hover:bg-[#54e7a3] py-2 text-white font-semibold  cursor-pointer">
+              className="px-14 rounded-xl text-base w-full text-center  bg-[#18BE71] hover:bg-[#54e7a3] py-2 text-white font-semibold  cursor-pointer">
               ADD NOW
             </button>
           </div>
