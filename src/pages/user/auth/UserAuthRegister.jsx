@@ -21,7 +21,9 @@ const UserAuthRegister = () => {
     const [visibleConPass, setvisibleConPass] = useState(false)
     const [lodding, setLodding] = useState(false);
 
-
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const code = params.get('inviteCode');
 
     const handleOnFocusName = (value) => {
         setFocusName(value)
@@ -59,9 +61,7 @@ const UserAuthRegister = () => {
                 email: data.email,
                 phone: data.phone, password: data.password,
                 name: data.name, 
-                balance: parseInt(0), 
-                type: 'Normal',
-                notice: 'Welcome'
+                referId: data?.referId
             });
 
             setLodding(true)
@@ -87,94 +87,98 @@ const UserAuthRegister = () => {
 
     return (
         <>
-            <div>
-                {lodding && <ScreenLoad></ScreenLoad>}
-            </div>
-            <div className="flex justify-center pt-10 md:pb-44 pb-10 px-2 md:px-0">
-                <div className="card shadow-2xl bg-base-100 md:p-10 w-[700px]">
-                    <div className="card-body">
-                        <div className="text-center space-y-4">
-                            {/* <h3 className="md:text-4xl text-2xl font-bold mainText">Sign Up</h3> */}
-                            <h4 className="md:text-xl text-slate-400">Enter your credentials to continue</h4>
+        <div>
+            {lodding && <ScreenLoad></ScreenLoad>}
+        </div>
+        <div className="flex justify-center pt-10 md:pb-44 pb-10 px-2 md:px-0">
+            <div className="card shadow-2xl bg-base-100 md:p-10 w-[700px]">
+                <div className="card-body">
+                    <div className="text-center space-y-4">
+                        {/* <h3 className="md:text-4xl text-2xl font-bold mainText">Sign Up</h3> */}
+                        <h4 className="md:text-xl text-slate-400">Enter your credentials to continue</h4>
+                    </div>
+
+                    <p className="text-center  font-semibold mb-6">Sign Up with Email address</p>
+                    {/* Form start */}
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {/* Type Name */}
+
+                        <p className={`text-slate-400   ${focusName ? 'text-blue-500 ' : ''}`}>নাম</p>
+                        <div className={`border-2 rounded-xl p-2 text-sm mb-4  bg-[#F8FAFC]  ${focusName ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
+                            <input {...register("name")} onFocus={() => handleOnFocusName(!focusName)} onBlur={() => handleOnFocusName(!focusName)} type="text" placeholder="নাম লিখুন" className="font-semibold border-none outline-none  w-full" />
                         </div>
 
-                        <p className="text-center  font-semibold mb-6">Sign Up with Email address</p>
-                        {/* Form start */}
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            {/* Type Name */}
+                        {/* Type Email */}
+                        <p className={`text-slate-400 ${errors.email && 'text-red-500'}  ${focusEmail ? 'text-blue-500 ' : ''}`}>ইমেইল</p>
+                        <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.email && 'border-red-500 hover:border-red-500'} ${focusEmail ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
+                            <input {...register("email", { required: true })} onFocus={() => handleOnFocusEmail(!focusEmail)} onBlur={() => handleOnFocusEmail(!focusEmail)} type="email" placeholder="ইমেইল লিখুন" className="font-semibold border-none outline-none  w-full" />
+                        </div>
+                        {errors.email && <span className=" text-red-600">Email is required</span>}
 
-                            <p className={`text-slate-400   ${focusName ? 'text-blue-500 ' : ''}`}>Name</p>
-                            <div className={`border-2 rounded-xl p-2 text-sm mb-4  bg-[#F8FAFC]  ${focusName ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
-                                <input {...register("name")} onFocus={() => handleOnFocusName(!focusName)} onBlur={() => handleOnFocusName(!focusName)} type="text" placeholder="Your Name" className="font-semibold border-none outline-none  w-full" />
+                        {/* Type Phone */}
+                        <p className={`text-slate-400 ${errors.phone && 'text-red-500'}  ${focusphone ? 'text-blue-500 ' : ''}`}>মোবাইল</p>
+                        <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.phone && 'border-red-500 hover:border-red-500'} ${focusphone ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
+                            <input {...register("phone", { required: true, minLength: 11, maxLength: 11 })} onFocus={() => handleOnFocusphone(!focusphone)} onBlur={() => handleOnFocusphone(!focusphone)} type="number" placeholder="মোবাইল লিখুন" className="font-semibold border-none outline-none  w-full" />
+                        </div>
+                        {errors.phone && <span className=" text-red-600">phone is required</span>}
+                        {/* Password */}
+                        <p className={`text-slate-400 ${errors.password && 'text-red-500'}  ${focusPass ? 'text-blue-500 ' : ''}`}>পাসওয়ার্ড</p>
+                        <div className={`border-2 flex mb-4 justify-between items-center rounded-xl p-2 text-sm bg-[#F8FAFC] ${errors.password && 'border-red-500 hover:border-red-500'} ${focusPass ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '} ${focusPass === 'notMatch' && 'border-red-500 hover:border-red-500'}`}>
+                            <div className="w-11/12">
+                                <input onFocus={() => handleOnFocusPass(!focusPass)} onBlur={() => handleOnFocusPass(!focusPass)} type={`${visiblePass ? 'text' : 'password'}`} placeholder="পাসওয়ার্ড লিখুন" className="font-semibold border-none outline-none  w-full"
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 6,
+                                        maxLength: 20
+                                    })}
+                                />
                             </div>
+                            <p className="text-2xl" onClick={() => handlePassVisible(!visiblePass)}>{visiblePass ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</p>
+                        </div>
+                        {errors.password?.type === 'required' && <span className=" text-red-600">Password is required</span>}
+                        {errors.password?.type === 'minLength' && <span className=" text-red-600">Password must be minumum 6 characters</span>}
+                        {errors.password?.type === 'maxLength' && <span className=" text-red-600">Password must be less then 20 characters</span>}
+                        {errors.password?.type === 'pattern' && <span className=" text-red-600">Please Enter capital letter & special character</span>}
+                        {/* Confirm Password */}
+                        <p className={`text-slate-400 ${errors.confirmPassword && 'text-red-500'}  ${focusConPass ? 'text-blue-500 ' : ''}`}>কনফার্ম পাসওয়ার্ড</p>
+                        <div className={`border-2 flex mb-4 justify-between items-center rounded-xl p-2 text-sm bg-[#F8FAFC] ${errors.confirmPassword && 'border-red-500 hover:border-red-500'} ${focusConPass ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '} ${focusConPass === 'notMatch' && 'border-red-500 hover:border-red-500'}`}>
+                            <div className="w-11/12">
+                                <input onFocus={() => handleOnFocusConPass(!focusConPass)} onBlur={() => handleOnFocusConPass(!focusConPass)} type={`${visibleConPass ? 'text' : 'password'}`} placeholder="পাসওয়ার্ড লিখুন" className="font-semibold border-none outline-none  w-full"
+                                    {...register("confirmPassword", {
+                                        required: true,
+                                    })}
+                                />
+                            </div>
+                            <p className="text-2xl" onClick={() => handlePassConVisible(!visibleConPass)}>{visibleConPass ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</p>
+                        </div>
 
-                            {/* Type Email */}
-                            <p className={`text-slate-400 ${errors.email && 'text-red-500'}  ${focusEmail ? 'text-blue-500 ' : ''}`}>Email Address</p>
-                            <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.email && 'border-red-500 hover:border-red-500'} ${focusEmail ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
-                                <input {...register("email", { required: true })} onFocus={() => handleOnFocusEmail(!focusEmail)} onBlur={() => handleOnFocusEmail(!focusEmail)} type="email" placeholder="Your Email" className="font-semibold border-none outline-none  w-full" />
-                            </div>
-                            {errors.email && <span className=" text-red-600">Email is required</span>}
+                        {errors.confirmPassword?.type === 'required' && <span className=" text-red-600">Passwords are not same</span>}
+                        {/* Type referId */}
+                        <p className={`text-slate-400 ${errors.referId && 'text-red-500'}  `}>রেফার আইডি</p>
+                        <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.referId && 'border-red-500 hover:border-red-500'}`}>
+                            <input {...register("referId",)} defaultValue={code} type="text" placeholder="রেফার আইডি লিখুন" className="font-semibold border-none outline-none  w-full" />
+                        </div>
+                        {/* {errors.referId && <span className=" text-red-600">ReferId is required</span>} */}
 
-                            {/* Type Phone */}
-                            <p className={`text-slate-400 ${errors.phone && 'text-red-500'}  ${focusphone ? 'text-blue-500 ' : ''}`}>Phone</p>
-                            <div className={`border-2 rounded-xl p-2 text-sm mb-4 bg-[#F8FAFC] ${errors.phone && 'border-red-500 hover:border-red-500'} ${focusphone ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '}`}>
-                                <input {...register("phone", { required: true, minLength: 11, maxLength: 11 })} onFocus={() => handleOnFocusphone(!focusphone)} onBlur={() => handleOnFocusphone(!focusphone)} type="number" placeholder="Your phone" className="font-semibold border-none outline-none  w-full" />
+                        {/* Forgot Password Area */}
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <input type="checkbox" onChange={() => handleOnFocusCheckBox(!focusCheckBox)} checked={focusCheckBox} className="checkbox" />
+                                <span>Agree with <a className="underline hover:text-[#ec5050]" href="">Terms & Condition</a></span>
                             </div>
-                            {errors.phone && <span className=" text-red-600">phone is required</span>}
-                            {/* Password */}
-                            <p className={`text-slate-400 ${errors.password && 'text-red-500'}  ${focusPass ? 'text-blue-500 ' : ''}`}>Password</p>
-                            <div className={`border-2 flex mb-4 justify-between items-center rounded-xl p-2 text-sm bg-[#F8FAFC] ${errors.password && 'border-red-500 hover:border-red-500'} ${focusPass ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '} ${focusPass === 'notMatch' && 'border-red-500 hover:border-red-500'}`}>
-                                <div className="w-11/12">
-                                    <input onFocus={() => handleOnFocusPass(!focusPass)} onBlur={() => handleOnFocusPass(!focusPass)} type={`${visiblePass ? 'text' : 'password'}`} placeholder="Your Password" className="font-semibold border-none outline-none  w-full"
-                                        {...register("password", {
-                                            required: true,
-                                            minLength: 6,
-                                            maxLength: 20
-                                        })}
-                                    />
-                                </div>
-                                <p className="text-2xl" onClick={() => handlePassVisible(!visiblePass)}>{visiblePass ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</p>
-                            </div>
-                            {errors.password?.type === 'required' && <span className=" text-red-600">Password is required</span>}
-                            {errors.password?.type === 'minLength' && <span className=" text-red-600">Password must be minumum 6 characters</span>}
-                            {errors.password?.type === 'maxLength' && <span className=" text-red-600">Password must be less then 20 characters</span>}
-                            {errors.password?.type === 'pattern' && <span className=" text-red-600">Please Enter capital letter & special character</span>}
-                            {/* Confirm Password */}
-                            <p className={`text-slate-400 ${errors.confirmPassword && 'text-red-500'}  ${focusConPass ? 'text-blue-500 ' : ''}`}>Confirm Password</p>
-                            <div className={`border-2 flex mb-4 justify-between items-center rounded-xl p-2 text-sm bg-[#F8FAFC] ${errors.confirmPassword && 'border-red-500 hover:border-red-500'} ${focusConPass ? 'border-[#106a4f] hover:border-[#106a4f]' : 'hover:border-black '} ${focusConPass === 'notMatch' && 'border-red-500 hover:border-red-500'}`}>
-                                <div className="w-11/12">
-                                    <input onFocus={() => handleOnFocusConPass(!focusConPass)} onBlur={() => handleOnFocusConPass(!focusConPass)} type={`${visibleConPass ? 'text' : 'password'}`} placeholder="Confirm Password" className="font-semibold border-none outline-none  w-full"
-                                        {...register("confirmPassword", {
-                                            required: true,
-                                        })}
-                                    />
-                                </div>
-                                <p className="text-2xl" onClick={() => handlePassConVisible(!visibleConPass)}>{visibleConPass ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</p>
-                            </div>
-
-                            {errors.confirmPassword?.type === 'required' && <span className=" text-red-600">Passwords are not same</span>}
-                            {/* Type referId */}
-                       
-
-                            {/* Forgot Password Area */}
-                            <div className="flex justify-between items-center">
-                                <div className="flex items-center gap-2">
-                                    <input type="checkbox" onChange={() => handleOnFocusCheckBox(!focusCheckBox)} checked={focusCheckBox} className="checkbox" />
-                                    <span>Agree with <a className="underline hover:text-[#ec5050]" href="">Terms & Condition</a></span>
-                                </div>
-                            </div>
-                            {/* Submit Btn */}
-                            <div>
-                                <input className={`text-end btn w-full mt-4 font-bold  text-xl ${softInfo.btn} text-white`} type="submit" disabled={!focusCheckBox} value="Sign Up" />
-                            </div>
-                        </form>
-                        <div className="divider"></div>
-                        <Link to='/user/auth/login'> <p className="font-semibold text-center text-sm hover:text-[#ec5050]">{`Already have an account?`}</p></Link>
-                    </div>
+                        </div>
+                        {/* Submit Btn */}
+                        <div>
+                            <input className={`text-end btn w-full mt-4 font-bold  text-xl ${softInfo.btn} text-white`} type="submit" disabled={!focusCheckBox} value="রেজিস্টার করুন" />
+                        </div>
+                    </form>
+                    <div className="divider"></div>
+                    <Link to='/user/auth/login'> <p className="font-semibold text-center text-sm hover:text-[#ec5050]">{`Already have an account?`}</p></Link>
                 </div>
-                <ToastContainer></ToastContainer>
             </div>
-        </>
+            <ToastContainer></ToastContainer>
+        </div>
+    </>
     );
 };
 

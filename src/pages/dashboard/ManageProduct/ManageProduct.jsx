@@ -5,8 +5,8 @@ import SectionTitle from "../../../components/SectionTitle";
 import useProducts from "../../../hooks/useProducts";
 import { HandleStatusChange } from "../../../utils/HandleStatusChange";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { HandleDelete } from "../../../utils/HandleDelete";
 import { ToastContainer } from "react-toastify";
+import { HandleDeleteProduct } from "../../../utils/HandleDelete";
 
 const ManageProduct = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -163,8 +163,8 @@ const ManageProduct = () => {
                 <FaEdit></FaEdit>
               </Link> */}
               <button onClick={() =>
-                  HandleDelete(
-                    axiosSecure, refetch , item._id, 'product'
+                  HandleDeleteProduct(
+                    axiosSecure, refetch , item, 'product'
                   )
                 } className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
                 <FaTrash></FaTrash>

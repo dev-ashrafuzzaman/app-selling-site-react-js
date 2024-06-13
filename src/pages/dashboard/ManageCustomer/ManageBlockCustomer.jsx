@@ -67,7 +67,7 @@ const ManageBlockCustomer = () => {
                                 <th className='border-b-2 border-black w-1'>Ref Id</th>
                                 <th className='border-b-2 border-black w-1'>Name</th>
                                 <th className='border-b-2 border-black w-1'>RefBy</th>
-                                <th className='border-b-2 border-black w-1'>IP</th>
+                                <th className='border-b-2 border-black w-1'>Reseller</th>
                                 <th className='border-b-2 border-black w-1'>Balance</th>
                                 <th className='border-b-2 border-black w-1'>Action</th>
                             </tr>

@@ -1,19 +1,37 @@
-import React from "react";
+import { useState } from "react";
 import NavberWeb from "../Navber/NavberWeb";
 import useUserOrders from "../../../hooks/web/useUserOrders";
 import { MdDownload } from "react-icons/md";
+import ResellerApplyModal from "./ResellerApplyModal";
+import { ToastContainer } from "react-toastify";
+import useWebUser from "../../../hooks/web/useWebUser";
 
 const Orders = () => {
   const [isUserOrders] = useUserOrders();
-  console.log(isUserOrders, "ok");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isWebUser] = useWebUser();
+  console.log(isWebUser);
   return (
     <>
+      <ResellerApplyModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}></ResellerApplyModal>
       <NavberWeb></NavberWeb>
       <div className="max-w-screen-2xl mx-auto px-2 pt-24">
         <div className="bg-slate-100 md:p-10 p-4 rounded-3xl ">
-          <p className="text-2xl my-6 px-2 font-semibold border-b-4 pb-2">
-            অর্ডার সমূহ:
-          </p>
+          <div className="text-2xl my-6 px-2 font-semibold border-b-4 pb-2 flex justify-between items-center">
+            <p className="">অর্ডার সমূহ:</p>
+            {isWebUser?.user?.type == "Normal" && (
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="btn btn-sm bg-green-600 text-white">
+                রিসেলার আবেদন করুন
+              </button>
+            )}
+            {
+              isWebUser?.user?.type == "Reseller"  && <p className="text-red-500">দয়া  করে অপেক্ষা করুন আপনার রিসেলার এপ্লিকেশন স্টেটাস : {isWebUser?.user?.resellerStatus} </p>
+            }
+          </div>
           <div className="grid grid-cols-1 gap-4">
             {isUserOrders?.map((order, index) => (
               <div
@@ -77,7 +95,10 @@ const Orders = () => {
                     <>
                       <div className="flex justify-center items-center font-semibold">
                         ডাউনলোড করুন{" "}
-                        <a href={order.link} target="_blank" className="bg-white p-2 ml-2 rounded-full text-black flex justify-center items-center btn animate-bounce transition duration-700 ease-in-out btn-success  shadow-lg shadow-red-300 btn-sm drop-shadow-lg">
+                        <a
+                          href={order.link}
+                          target="_blank"
+                          className="bg-white p-2 ml-2 rounded-full text-black flex justify-center items-center btn animate-bounce transition duration-700 ease-in-out btn-success  shadow-lg shadow-red-300 btn-sm drop-shadow-lg">
                           <MdDownload></MdDownload>
                         </a>
                       </div>
@@ -89,6 +110,7 @@ const Orders = () => {
           </div>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </>
   );
 };

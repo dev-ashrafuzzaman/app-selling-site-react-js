@@ -4,10 +4,12 @@ import useAuth from "../../../hooks/useAuth";
 import { MdLogin, MdLogout } from "react-icons/md";
 import { HandleLogout } from "../../../utils/HandleLogout";
 import { FaRegistered } from "react-icons/fa";
+import useWebUser from "../../../hooks/web/useWebUser";
 
 const NavberWeb = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { WebUser, WebUserLogout } = useAuth();
+  const [isWebUser] = useWebUser()
   const navigate = useNavigate();
 
   const handleDropdownToggle = () => {
@@ -120,10 +122,17 @@ const NavberWeb = () => {
                 {WebUser ? (
                   <>
                     <li>
-                      <Link to={"/user/orders"} className="justify-between">
+                      {
+                        isWebUser?.user?.resellerStatus == 'Approved' ? 
+                        <Link to={"/user/auth/dashboard/home"} className="justify-between">
+                        ড্যাশবোর্ড
+                        <span className="badge">New</span>
+                      </Link> : <Link to={"/user/orders"} className="justify-between">
                         ড্যাশবোর্ড
                         <span className="badge">New</span>
                       </Link>
+                      }
+                      
                     </li>
                     <li onClick={() => HandleLogout(WebUserLogout, navigate)}>
                       <a>

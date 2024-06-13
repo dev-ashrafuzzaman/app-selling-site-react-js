@@ -1,10 +1,11 @@
 import { ChevronFirst, ChevronLast } from 'lucide-react';
 import { useState } from 'react';
-import { MdAdd, MdApproval, MdBlock, MdDoneOutline, MdHome, MdLink, MdList, MdListAlt, MdOutbox, MdPending, MdSupervisedUserCircle, MdViewList, MdWork } from 'react-icons/md';
+import { MdAdd, MdApproval, MdBlock, MdHome, MdLink, MdList, MdListAlt, MdOutbox, MdPending, MdSupervisedUserCircle, MdViewList, MdWork } from 'react-icons/md';
 import { Sidebar, Menu, MenuItem, SubMenu, sidebarClasses, menuClasses } from 'react-pro-sidebar';
 import { NavLink } from 'react-router-dom';
 import { softInfo } from '../utils/info';
-import { FaDirections, FaFirstOrder } from 'react-icons/fa';
+import {  FaFirstOrder, FaImage } from 'react-icons/fa';
+import { FaMagento } from 'react-icons/fa6';
 
 const SidebarComponent = ({ toggled, setToggled }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -59,26 +60,22 @@ const SidebarComponent = ({ toggled, setToggled }) => {
           <MenuItem icon={<MdBlock></MdBlock>} component={<NavLink to="/leery/admin/dashboard/block-user" />}>blocked Users</MenuItem>
         </SubMenu>
         <MenuItem icon={<FaFirstOrder></FaFirstOrder>} component={<NavLink to="/leery/admin/dashboard/manage-orders" />}>Orders</MenuItem>
-        {/* <SubMenu label="Withdraw" icon={<MdOutbox></MdOutbox>}>
+        <SubMenu label="Reseller Withdraw" icon={<MdOutbox></MdOutbox>}>
           <MenuItem icon={<MdPending></MdPending>} component={<NavLink to="/leery/admin/dashboard/pending-withdraw" />}>Pending</MenuItem>
           <MenuItem icon={<MdApproval></MdApproval>} component={<NavLink to="/leery/admin/dashboard/approved-withdraw" />}>Approved</MenuItem>
           <MenuItem icon={<MdBlock></MdBlock>} component={<NavLink to="/leery/admin/dashboard/rejected-withdraw" />}>Rejected</MenuItem>
-        </SubMenu> */}
-        {/* <SubMenu label="Job" icon={<MdWork></MdWork>}>
-          <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-job" />}>Add</MenuItem>
-          <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-job" />}>Manage</MenuItem>
-          <MenuItem icon={<MdDoneOutline></MdDoneOutline>} component={<NavLink to="/leery/admin/dashboard/user-job-submit" />}>User Submit</MenuItem>
-        </SubMenu> */}
-        {/* <SubMenu label="Direct Link" icon={<FaDirections></FaDirections>}>
-          <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-direct-link" />}>Add</MenuItem>
-          <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-direct-link" />}>Manage</MenuItem>
-          <MenuItem icon={<MdDoneOutline></MdDoneOutline>} component={<NavLink to="/leery/admin/dashboard/user-direct-link-submit" />}>User Submit</MenuItem>
-        </SubMenu> */}
+        </SubMenu>
+        <SubMenu label="Reseller Apply" icon={<FaMagento></FaMagento>}>
+          <MenuItem icon={<MdPending></MdPending>} component={<NavLink to="/leery/admin/dashboard/reseller" />}>Pending</MenuItem>
+          <MenuItem icon={<MdApproval></MdApproval>} component={<NavLink to="/leery/admin/dashboard/approved-reseller" />}>Approved</MenuItem>
+          <MenuItem icon={<MdBlock></MdBlock>} component={<NavLink to="/leery/admin/dashboard/rejected-reselller" />}>Rejected</MenuItem>
+        </SubMenu>
+
         <SubMenu label="Product" icon={<MdViewList></MdViewList>}>
           <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-product" />}>Add</MenuItem>
           <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-products" />}>Manage</MenuItem>
         </SubMenu>
-        <SubMenu label="Banner" icon={<MdViewList></MdViewList>}>
+        <SubMenu label="Banner" icon={<FaImage></FaImage>}>
           <MenuItem icon={<MdAdd></MdAdd>} component={<NavLink to="/leery/admin/dashboard/add-banner" />}>Add</MenuItem>
           <MenuItem icon={<MdListAlt></MdListAlt>} component={<NavLink to="/leery/admin/dashboard/manage-banner" />}>Manage</MenuItem>
         </SubMenu>

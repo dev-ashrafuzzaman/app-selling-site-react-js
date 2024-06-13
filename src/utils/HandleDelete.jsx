@@ -15,6 +15,7 @@ export const HandleDelete = async (axiosSecure, refetch , id, route) => {
 
     if (result.isConfirmed) {
         const data = await axiosSecure.delete(`/api/v1/admin/${route}/${id}`);
+        console.log(data, 'delete');
         if (data.data.deletedCount > 0) {
             refetch()
             SuccessToast('Delete Success')

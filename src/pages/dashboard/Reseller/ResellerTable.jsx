@@ -11,16 +11,26 @@ import { MdDeliveryDining } from "react-icons/md";
 import OrderDelivaryModal from "../../../components/Order/OrderDelivaryModal";
 import ProductViewModal from "../../../components/Product/ProductViewModal";
 import useSingleProduct from "../../../hooks/useSingleProduct";
+import { useLocation } from "react-router-dom";
+import useReseller from "../../../hooks/useReseller";
+import ResellerSubmitModal from "./ResellerSubmitModal";
 
-const ManageOrder = () => {
+const ResellerTable = () => {
   const [axiosSecure] = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
   const [isDelivaryOpen, setIsDelivaryOpen] = useState(false);
   const [isProductViewOpen, setIsProductViewOpen] = useState(false);
-  const {isSingleProduct} = useSingleProduct();
+  const { isSingleProduct } = useSingleProduct();
   console.log(isSingleProduct);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const type = params.get("type");
+
+  const initialPage = 1;
+  const initialPageSize = 10;
+  const initialSearchQuery = "";
   const {
-    isOrders,
+    isReseller,
     refetch,
     isOrdersLoading,
     currentPage,
@@ -31,20 +41,17 @@ const ManageOrder = () => {
     setSearchQuery,
     totalPages,
     totalCount,
-  } = useOrders();
+  } = useReseller(initialPage, initialPageSize, initialSearchQuery, type);
 
-  console.log(isOrders);
+  console.log(isReseller);
   const [selectedOrder, setSelectedOrder] = useState({});
 
   const handleStatusChange = (order) => {
     setSelectedOrder(order);
     setIsOpen(!isOpen);
   };
-  const handleOrderDelivary = (order) => {
-    setSelectedOrder(order);
-    setIsDelivaryOpen(!isDelivaryOpen);
-  };
-  const handleProductView = (order) => {
+
+  const handleSubmitView = (order) => {
     setSelectedOrder(order);
     setIsProductViewOpen(!isProductViewOpen);
   };
@@ -65,21 +72,19 @@ const ManageOrder = () => {
         axiosSecure={axiosSecure}
         refetch={refetch}
       />
-      <ProductViewModal
+      <ResellerSubmitModal
         isOpen={isProductViewOpen}
         setIsOpen={setIsProductViewOpen}
         data={selectedOrder}
-        product={isSingleProduct}
       />
       {isOrdersLoading && <ScreenLoad />}
-      <SectionTitle heading={"Orders Management"} />
+      <SectionTitle heading={"Reseller Management"} />
       <Table
         head={[
           "#",
-          "Customer",
-          "Product",
-          "Orders",
-          "Payment",
+          "Reseller",
+          "Submit",
+          "Balance",
           "Status",
           "Action",
         ]}
@@ -92,78 +97,47 @@ const ManageOrder = () => {
         setSearchQuery={setSearchQuery}
         totalPages={totalPages}
         totalCount={totalCount}>
-        {isOrders?.data?.map((item, index) => (
+        {isReseller?.data?.map((item, index) => (
           <tr
             key={index}
             className="border-2 hover:bg-slate-100 text-lg text-center">
             <th className="border-2 p-2">{index + 1}</th>
             <td className="border-2 p-2">
               <a
-                href={`/leery/admin/dashboard/track-user/${item.uId}`}
+                href={`/leery/admin/dashboard/track-user/${item?.email}`}
                 className="text-sky-600 font-bold cursor-pointer p-2"
                 target="_blank">
-                {item?.uId}
+                {item?.email}
               </a>
+              <p>Name: {item?.name}</p>
+              <p>Mobile: {item?.phone}</p>
+              <p>Join: {item?.joinDate}</p>
             </td>
             <td className="border-2 p-2">
               <div>
                 <button
-                onClick={()=> handleProductView(item)}
+                  onClick={() => handleSubmitView(item)}
                   className="text-sky-600 font-bold cursor-pointer p-2">
                   View Details
                 </button>
-                <p className="font-bold">{item.product.title}</p>
-                <p>Price: {item.product.price}</p>
+                <p>Gov ID: {item?.govId}</p>
               </div>
             </td>
-            <td className="border-2 p-2">
-              <div className="flex flex-col justify-center items-center">
-                <img
-                  className="w-16"
-                  src={`${import.meta.env.VITE_BASE_URL}${item.custom.logo}`}
-                  alt=""
-                />
-                <p>Name: {item.custom.name}</p>
-                <p>Email: {item.custom.email}</p>
-                <p>Pass: {item.custom.pass}</p>
-                <p>Mobile: {item.custom.mobile}</p>
-                {item.custom.package && (
-                  <p className="text-red-600 font-semibold">
-                    Mobile: {item.custom.package}
-                  </p>
-                )}
-                {item.custom.package ? (
-                  <p className="text-green-600 font-semibold">Website</p>
-                ) : (
-                  <p className="text-blue-600 font-semibold">Apps</p>
-                )}
-              </div>
-            </td>
-            <td className="border-2 p-2 text-center ">
-              <div>
-                <p>
-                  {item.payment.method} -- {item.payment.type}
-                </p>
-                <p>{item.payment.number}</p>
-                <p></p>
-                <p className="font-bold">
-                  TransactionId: {item.payment.transactionId}
-                </p>
-                <p>Order Time: {item.orderTime}</p>
-              </div>
+            <td>
+              <p className="bg-green-50 px-6 border border-green-500 rounded-full">{item?.balance}</p>
             </td>
             <td className="border-2 p-2">
               <p
                 className={`border rounded-full ${
-                  item.status === "Pending"
+                  item?.resellerStatus === "Pending"
                     ? "bg-purple-50 font text-purple-600"
-                    : item.status === "Processing"
+                    : item?.resellerStatus === "Processing"
                     ? "bg-blue-50 font text-blue-600"
-                    : item.status === "Complete"
+                    : item?.resellerStatus === "Approved"
                     ? "bg-green-50 font text-green-600"
                     : "bg-red-50 font text-red-600"
                 }`}>
-                {item.status}
+                {item?.resellerStatus}
               </p>
             </td>
             {/* Action Area */}
@@ -171,7 +145,7 @@ const ManageOrder = () => {
               <button
                 onClick={() => handleOrderDelivary(item)}
                 className={`btn-xs p-1 rounded-md has-tooltip text-white ${
-                  item.downloadStatus === true ? "bg-green-500" : "bg-red-300"
+                  item?.downloadStatus === true ? "bg-green-500" : "bg-red-300"
                 }`}>
                 <MdDeliveryDining />
               </button>
@@ -197,4 +171,4 @@ const ManageOrder = () => {
   );
 };
 
-export default ManageOrder;
+export default ResellerTable;

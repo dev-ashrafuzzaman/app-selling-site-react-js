@@ -53,6 +53,7 @@ import AdminRoute from "./AdminRoute";
 import ManageOrder from "../pages/dashboard/ManageOrder/ManageOrder";
 import ManageProduct from "../pages/dashboard/ManageProduct/ManageProduct";
 import AddProduct from "../pages/dashboard/ManageProduct/AddProduct";
+import ResellerTable from "../pages/dashboard/Reseller/ResellerTable";
 
 export const router = createBrowserRouter([
   {
@@ -268,6 +269,10 @@ export const router = createBrowserRouter([
       {
         path: "users-payment",
         element: <ManagePayment></ManagePayment>,
+      },
+      {
+        path: "reseller",
+        element: <ResellerTable></ResellerTable>,
       },
       {
         path: "pending-withdraw",
