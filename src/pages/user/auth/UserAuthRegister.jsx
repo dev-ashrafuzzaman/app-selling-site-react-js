@@ -59,6 +59,9 @@ const UserAuthRegister = () => {
                 email: data.email,
                 phone: data.phone, password: data.password,
                 name: data.name, 
+                balance: parseInt(0), 
+                type: 'Normal',
+                notice: 'Welcome'
             });
 
             setLodding(true)

@@ -8,7 +8,7 @@ const CustomerTable = ({ data, sl, refetch, axiosSecure,showModal,showModal1 }) 
     return (
         <tr className='border-2 hover:bg-slate-100'>
             <th className='border-2'>{sl + 1}</th>
-            <td className='border-2'> <a className="text-sky-600 font-bold cursor-pointer" href={`/leery/admin/dashboard/track-user/${data._id}`} target="_blank">{data?.email}</a></td>
+            <td className='border-2'> <a className="text-sky-600 font-bold cursor-pointer" href={`/leery/admin/dashboard/track-user/${data.email}`} target="_blank">{data?.email}</a></td>
             <td className='border-2'>{data?.referCode}</td>
             <td className='border-2'>{data?.name}</td>
             <td className='border-2'>{data?.refBy?.length}</td>

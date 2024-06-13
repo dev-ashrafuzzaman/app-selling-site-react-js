@@ -5,23 +5,23 @@ import { useForm } from "react-hook-form";
 import { SuccessToast } from "../../../utils/Toastify";
 import { HandleStatusChange } from "../../../utils/HandleStatusChange";
 import useAdmin from "../../../hooks/useAdmin";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import WithdrawTable from "../../../components/Table/WithdrawTable";
-import { FaBell, FaCoins } from "react-icons/fa";
-import JobSubmitTable from "../../../components/Table/JobSubmitTable";
+import { FaBell, FaCoins, FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
 import { useRef, useState } from "react";
 import DirectSubmitTable from "../../../components/Table/DirectSubmitTable";
 import HistoryTable from "../../../components/Table/HistoryTable";
 import { HandleUserBonus } from "../../../utils/WebUsers/HandleUserBonus";
 import { HandleNoticeSend } from "../../../utils/WebUsers/HandleNoticeSend";
 import { HandleJobSubmitStatus } from "../../../utils/WebUsers/HandleJobSubmitStatus";
-
+import SectionTitle from "../../../components/SectionTitle";
+import TruckTable from "../../../components/ui/TruckTable";
 const TrackCustomer = () => {
     const userInfo = useLoaderData()
     const { register, handleSubmit, reset } = useForm();
     const [axiosSecure] = useAxiosSecure();
     const [, refetch] = useAdmin();
-
+console.log(userInfo);
     const [bonusValue, setBonusValue] = useState({
         amount: '',
     })
@@ -106,18 +106,19 @@ const TrackCustomer = () => {
             <div className="md:flex items-center gap-4 bg-white rounded-2xl p-4 drop-shadow-xl">
                 <div className="avatar">
                     <div className="w-24 rounded-xl">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        <img src={'https://cdn-icons-png.flaticon.com/512/9187/9187604.png'} />
                     </div>
                 </div>
                 <div className="space-y-2 ">
-                    <p className="text-sm font-extrabold">{userInfo?.user.name}</p>
-                    <p className="text-sm text-gray-400">Joined: {userInfo?.user.joinDate}</p>
+                    <p className="text-sm font-extrabold">{userInfo?.user?.name}</p>
+                    <p className="text-sm text-gray-400">Joined: {userInfo?.user?.joinDate}</p>
                 </div>
                 <div className="w-full md:flex justify-end items-center gap-3 ">
                     <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
+                       
                         <button onClick={() => showModal(userInfo?.user)} className="flex  items-center gap-2 btn btn-primary  btn-xs text-white"><MdAddCard></MdAddCard>Add Balance</button>
                         <button onClick={() => showModal4(userInfo?.user)} className="flex  items-center gap-2 btn btn-accent  btn-xs text-white"><MdNotificationAdd></MdNotificationAdd>Send Notification</button>
-                        <button className={`flex  items-center gap-2 btn btn-xs tooltip text-white ${userInfo.user.status === true ? 'btn-success' : 'bg-slate-300'}`} onClick={() => HandleStatusChange(axiosSecure, refetch, userInfo?.user?._id, 'user', !userInfo?.user?.status)}><MdBlock></MdBlock>Ban User</button>
+                        <button className={`flex  items-center gap-2 btn btn-xs tooltip text-white ${userInfo?.user?.status === true ? 'btn-success' : 'bg-slate-300'}`} onClick={() => HandleStatusChange(axiosSecure, refetch, userInfo?.user?._id, 'user', !userInfo?.user?.status)}><MdBlock></MdBlock>Ban User</button>
                     </div>
                 </div>
             </div>
@@ -131,20 +132,15 @@ const TrackCustomer = () => {
                             <label className="label">
                                 <span className="label-text">Name*</span>
                             </label>
-                            <input type="text" defaultValue={userInfo?.user.name} readOnly placeholder="Type here name" {...register("sureName", { required: true })} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
+                            <input type="text" defaultValue={userInfo?.user?.name} readOnly placeholder="Type here name" {...register("sureName", { required: true })} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
                         </div>
                         <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
                             <label className="label">
                                 <span className="label-text">Email*</span>
                             </label>
-                            <input type="email" defaultValue={userInfo?.user.email} readOnly placeholder="Type here email" {...register("email")} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
+                            <input type="email" defaultValue={userInfo?.user?.email} readOnly placeholder="Type here email" {...register("email")} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
                         </div>
-                        <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
-                            <label className="label">
-                                <span className="label-text">Ip Address*</span>
-                            </label>
-                            <input type="text" defaultValue={userInfo?.user.ipAddress} readOnly placeholder="Type here user name 017---" {...register("userName", { required: true })} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
-                        </div>
+
                     </div>
                     <div className="md:flex gap-6">
 
@@ -152,26 +148,21 @@ const TrackCustomer = () => {
                             <label className="label">
                                 <span className="label-text">Mobile No*</span>
                             </label>
-                            <input type="text" defaultValue={userInfo?.user.phone} readOnly placeholder="PhoMobilene" {...register("mobile", { required: true })} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
+                            <input type="text" defaultValue={userInfo?.user?.phone} readOnly placeholder="PhoMobilene" {...register("mobile", { required: true })} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
                         </div>
                         <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
                             <label className="label">
                                 <span className="label-text">Refer Code*</span>
                             </label>
-                            <input type="text" defaultValue={userInfo?.user.referCode} readOnly placeholder="Whatsapp Mobile" {...register("whatsAppMobile")} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
+                            <input type="text" defaultValue={userInfo?.user?.referCode} readOnly placeholder="Ref code" {...register("refCode")} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
                         </div>
-                        <div className="form-control w-full max-w-xs md:max-w-screen-2xl">
-                            <label className="label">
-                                <span className="label-text">System Ip*</span>
-                            </label>
-                            <input type="text" defaultValue={userInfo?.user.ip} readOnly placeholder="Mobile" {...register("altMobile")} className="input input-bordered w-full md:max-w-screen-2xl max-w-xs" />
-                        </div>
+                     
                     </div>
                     <div className="my-4 space-y-3">
                         <p className="font-bold text-success">Total Refer Network: {userInfo?.user?.refBy?.length}</p>
                         <div className="grid md:grid-cols-6 grid-cols-2 text-center font-bold gap-4">
                             {
-                                userInfo?.user?.refBy.map((ref, index) => <div
+                                userInfo?.user?.refBy?.map((ref, index) => <div
                                     className="border-2 border-dashed p-2"
                                     key={index}
                                 >{ref}</div>)
@@ -181,6 +172,9 @@ const TrackCustomer = () => {
                 </form>
             </div>
 
+
+{
+    userInfo?.user?.type == 'reseller' ? <>
             {/* User Withdraw */}
             <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
                 <p className="text-2xl font-bold mb-10">Withdraw List</p>
@@ -213,42 +207,8 @@ const TrackCustomer = () => {
                     </table>
                 </div>
             </div>
-
-            {/* User Job Submit */}
-            <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
-                <p className="text-2xl font-bold mb-10">Job Submit List</p>
-
-                <div className="overflow-x-auto bg-white p-6 rounded-2xl">
-                    <table className="table">
-                        <thead className='font-bold text-black'>
-                            <tr>
-                                <th className='border-b-2 border-black'>#</th>
-                                <th className='border-b-2 border-black '>Visit Time</th>
-                                <th className='border-b-2 border-black '>Submit Time 1</th>
-                                <th className='border-b-2 border-black w-16'>Prof 1</th>
-                                <th className='border-b-2 border-black'>Submit Time2</th>
-                                <th className='border-b-2 border-black w-16'>Prof 2</th>
-                                <th className='border-b-2 border-black '>Status</th>
-                                <th className='border-b-2 border-black'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                userInfo?.jobSubmit?.map((withdraw, index) => <JobSubmitTable
-                                    key={withdraw._id}
-                                    data={withdraw}
-                                    sl={index}
-                                    refetch={refetch}
-                                    axiosSecure={axiosSecure}
-                                    showModal1={showModal1}
-                                    showModal={showModal3}
-                                ></JobSubmitTable>)
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+    
+    
             {/* User Direct Submit */}
             <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
                 <p className="text-2xl font-bold mb-10">Direct Submit List</p>
@@ -311,6 +271,109 @@ const TrackCustomer = () => {
                     </table>
                 </div>
             </div>
+
+
+    </> : <>
+    
+    <div>
+      <SectionTitle heading={"Orders Management"}></SectionTitle>
+      <TruckTable
+        head={[
+          "#",
+          "Customer",
+          "Product",
+          "Orders",
+          "Payment",
+          "Status",
+        ]}
+       >
+        {userInfo?.order?.map((item, index) => (
+          <tr
+            key={index}
+            className="border-2 hover:bg-slate-100 text-lg text-center">
+            <th className="border-2 p-2">{index + 1}</th>
+            <td className="border-2 p-2">
+              <a
+                href={`/leery/admin/dashboard/track-user/${item?.uId}`}
+                className="text-sky-600 font-bold cursor-pointer p-2"
+                target="_blank">
+                {item?.uId}
+              </a>
+            </td>
+            <td className="border-2 p-2">
+              <div>
+                <a
+                  className="text-sky-600 font-bold cursor-pointer p-2"
+                  target="_blank"
+                  href={`/leery/admin/dashboard/product/${item?.product?.categoryId}`}>
+                  View Details
+                </a>
+                <p className="font-bold">{item?.product?.title}</p>
+                <p>Price: {item?.product?.price}</p>
+              </div>
+            </td>
+            <td className="border-2 p-2">
+              <div className="flex flex-col justify-center items-center">
+                <img
+                  className="w-16 "
+                  src={`${import.meta.env.VITE_BASE_URL}${item?.custom?.logo}`}
+                  alt=""
+                />
+                <p>Name: {item?.custom?.name}</p>
+                <p>Email: {item?.custom?.email}</p>
+                <p>Pass: {item?.custom?.pass}</p>
+                <p>Mobile: {item?.custom?.mobile}</p>
+                {item?.custom?.package && (
+                  <p className="text-red-600 font-semibold">
+                    Mobile: {item?.custom?.package}
+                  </p>
+                )}
+                {item?.custom?.package ? (
+                  <p className="text-green-600 font-semibold">Website</p>
+                ) : (
+                  <p className="text-blue-600 font-semibold">Apps</p>
+                )}
+              </div>
+            </td>
+            <td className="border-2 p-2 text-center ">
+              <div>
+                <p>
+                  {item?.payment?.method} -- {item?.payment?.type}
+                </p>
+                <p>{item?.payment?.number}</p>
+                <p></p>
+                <p className="font-bold">
+                  TransactionId: {item?.payment?.transactionId}
+                </p>
+                <p>Order Time: {item?.orderTime}</p>
+              </div>
+            </td>
+            <td className="border-2 p-2 ">
+              <p
+                className={`border rounded-full ${
+                  item?.status == "Pending"
+                    ? "bg-purple-50 font text-purple-600"
+                    : item?.status == "Processing"
+                    ? "bg-blue-50 font text-blue-600"
+                    : item?.status == "Complete"
+                    ? "bg-green-50 font text-green-600"
+                    : "bg-red-50 font text-red-600"
+                }`}>
+                {item?.status}
+              </p>
+            </td>
+      
+          </tr>
+        ))}
+      </TruckTable>
+    </div>
+    
+    </>
+}
+    
+
+       
+
             <ToastContainer></ToastContainer>
 
             <dialog id="my_modal" ref={modalRef} className="modal ">

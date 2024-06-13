@@ -1,10 +1,24 @@
 import useOrders from "../../../hooks/useOrders";
 import Table from "../../../components/ui/Table";
-import {  FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
+import { HandleDeleteOrder } from "../../../utils/HandleDelete";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import ScreenLoad from "../../../components/ScreenLoad";
+import { useState } from "react";
+import OrderStatusModal from "../../../components/Order/OrderStatusModal";
+import { MdDeliveryDining } from "react-icons/md";
+import OrderDelivaryModal from "../../../components/Order/OrderDelivaryModal";
+import ProductViewModal from "../../../components/Product/ProductViewModal";
+import useSingleProduct from "../../../hooks/useSingleProduct";
 
 const ManageOrder = () => {
+  const [axiosSecure] = useAxiosSecure();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDelivaryOpen, setIsDelivaryOpen] = useState(false);
+  const [isProductViewOpen, setIsProductViewOpen] = useState(false);
+  const {isSingleProduct} = useSingleProduct();
+  console.log(isSingleProduct);
   const {
     isOrders,
     refetch,
@@ -20,9 +34,45 @@ const ManageOrder = () => {
   } = useOrders();
 
   console.log(isOrders);
+  const [selectedOrder, setSelectedOrder] = useState({});
+
+  const handleStatusChange = (order) => {
+    setSelectedOrder(order);
+    setIsOpen(!isOpen);
+  };
+  const handleOrderDelivary = (order) => {
+    setSelectedOrder(order);
+    setIsDelivaryOpen(!isDelivaryOpen);
+  };
+  const handleProductView = (order) => {
+    setSelectedOrder(order);
+    setIsProductViewOpen(!isProductViewOpen);
+  };
+
   return (
     <div>
-      <SectionTitle heading={"Orders Management"}></SectionTitle>
+      <OrderStatusModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        data={selectedOrder}
+        axiosSecure={axiosSecure}
+        refetch={refetch}
+      />
+      <OrderDelivaryModal
+        isOpen={isDelivaryOpen}
+        setIsOpen={setIsDelivaryOpen}
+        data={selectedOrder}
+        axiosSecure={axiosSecure}
+        refetch={refetch}
+      />
+      <ProductViewModal
+        isOpen={isProductViewOpen}
+        setIsOpen={setIsProductViewOpen}
+        data={selectedOrder}
+        product={isSingleProduct}
+      />
+      {isOrdersLoading && <ScreenLoad />}
+      <SectionTitle heading={"Orders Management"} />
       <Table
         head={[
           "#",
@@ -57,12 +107,11 @@ const ManageOrder = () => {
             </td>
             <td className="border-2 p-2">
               <div>
-                <a
-                  className="text-sky-600 font-bold cursor-pointer p-2"
-                  target="_blank"
-                  href={`/leery/admin/dashboard/product/${item.product.categoryId}`}>
+                <button
+                onClick={()=> handleProductView(item)}
+                  className="text-sky-600 font-bold cursor-pointer p-2">
                   View Details
-                </a>
+                </button>
                 <p className="font-bold">{item.product.title}</p>
                 <p>Price: {item.product.price}</p>
               </div>
@@ -70,7 +119,7 @@ const ManageOrder = () => {
             <td className="border-2 p-2">
               <div className="flex flex-col justify-center items-center">
                 <img
-                  className="w-16 "
+                  className="w-16"
                   src={`${import.meta.env.VITE_BASE_URL}${item.custom.logo}`}
                   alt=""
                 />
@@ -103,14 +152,14 @@ const ManageOrder = () => {
                 <p>Order Time: {item.orderTime}</p>
               </div>
             </td>
-            <td className="border-2 p-2 ">
+            <td className="border-2 p-2">
               <p
                 className={`border rounded-full ${
-                  item.status == "Pending"
+                  item.status === "Pending"
                     ? "bg-purple-50 font text-purple-600"
-                    : item.status == "Processing"
+                    : item.status === "Processing"
                     ? "bg-blue-50 font text-blue-600"
-                    : item.status == "Complete"
+                    : item.status === "Complete"
                     ? "bg-green-50 font text-green-600"
                     : "bg-red-50 font text-red-600"
                 }`}>
@@ -120,18 +169,25 @@ const ManageOrder = () => {
             {/* Action Area */}
             <th className="flex flex-col justify-center items-center gap-2 p-2">
               <button
-                className={`btn-xs p-1 rounded-md has-tooltip  text-white ${
-                  item.status === true ? "btn-success" : "bg-slate-300"
+                onClick={() => handleOrderDelivary(item)}
+                className={`btn-xs p-1 rounded-md has-tooltip text-white ${
+                  item.downloadStatus === true ? "bg-green-500" : "bg-red-300"
                 }`}>
-                <FaPowerOff></FaPowerOff>
+                <MdDeliveryDining />
               </button>
-              <Link
-                to={`/leery/admin/dashboard/track-user/${item._id}`}
-                className="btn-xs has-tooltip p-1 rounded-md bg-secondary text-white">
-                <FaEdit></FaEdit>
-              </Link>
-              <button className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
-                <FaTrash></FaTrash>
+              <div className="relative inline-block text-left">
+                <button
+                  className="btn-xs has-tooltip p-1 rounded-md bg-secondary text-white"
+                  onClick={() => handleStatusChange(item)}>
+                  <FaEdit />
+                </button>
+              </div>
+              <button
+                onClick={() =>
+                  HandleDeleteOrder(axiosSecure, refetch, item, "order")
+                }
+                className="btn-xs has-tooltip bg-red-600 p-1 rounded-md text-white">
+                <FaTrash />
               </button>
             </th>
           </tr>

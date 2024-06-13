@@ -345,6 +345,7 @@ const AddProduct = () => {
                   </label>
                   <input
                     type="number"
+                    defaultValue={0}
                     placeholder="Type here"
                     {...register("discount")}
                     className="input input-bordered w-full"

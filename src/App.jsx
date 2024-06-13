@@ -3,6 +3,7 @@ import ScreenLoad from "./components/ScreenLoad";
 import HeroSlider from "./components/website/HeroSlider/HeroSlider";
 import NavberWeb from "./components/website/Navber/NavberWeb";
 import useWebUtils from "./hooks/web/useWebUtils";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const webUtils = useWebUtils();
@@ -34,6 +35,7 @@ const App = () => {
           categorys={webUtils?.data?.categorys}
           products={webUtils?.data?.products}></HeroSlider>
       </div>
+      <ToastContainer></ToastContainer>
     </>
   );
 };

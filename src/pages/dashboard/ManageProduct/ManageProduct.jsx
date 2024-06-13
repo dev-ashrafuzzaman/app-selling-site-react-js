@@ -1,11 +1,15 @@
-import useOrders from "../../../hooks/useOrders";
+
 import Table from "../../../components/ui/Table";
-import {  FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaPowerOff, FaTrash } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
 import useProducts from "../../../hooks/useProducts";
+import { HandleStatusChange } from "../../../utils/HandleStatusChange";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { HandleDelete } from "../../../utils/HandleDelete";
+import { ToastContainer } from "react-toastify";
 
 const ManageProduct = () => {
+  const [axiosSecure] = useAxiosSecure();
   const {
     isProducts,
     refetch,
@@ -25,15 +29,7 @@ const ManageProduct = () => {
     <div>
       <SectionTitle heading={"Product Management"}></SectionTitle>
       <Table
-        head={[
-          "#",
-          "Customer",
-          "Product",
-          "Orders",
-          "Payment",
-          "Status",
-          "Action",
-        ]}
+        head={["#", "Image", "Product", "Demo", "Discount", "Status", "Action"]}
         refetch={refetch}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -49,95 +45,135 @@ const ManageProduct = () => {
             className="border-2 hover:bg-slate-100 text-lg text-center">
             <th className="border-2 p-2">{index + 1}</th>
             <td className="border-2 p-2">
-              <a
-                href={`/leery/admin/dashboard/track-user/${item?.uId}`}
-                className="text-sky-600 font-bold cursor-pointer p-2"
-                target="_blank">
-                {item?.uId}
-              </a>
+              <img
+                className="w-16"
+                src={`${import.meta.env.VITE_BASE_URL}${item.imageUrls[0]}`}
+                alt=""
+              />
             </td>
             <td className="border-2 p-2">
               <div>
-                <a
-                  className="text-sky-600 font-bold cursor-pointer p-2"
-                  target="_blank"
-                  href={`/leery/admin/dashboard/product/${item?.product?.categoryId}`}>
-                  View Details
-                </a>
-                <p className="font-bold">{item?.product?.title}</p>
-                <p>Price: {item?.product?.price}</p>
+                {item?.categoryId == "6650aabd63490d2bca547c21" ? (
+                  <p className="text-blue-600 font-semibold">Apps</p>
+                ) : (
+                  <p className="text-green-600 font-semibold">Website</p>
+                )}
+                <p className="font-bold">{item?.title}</p>
+                {item?.categoryId == "6650aabd63490d2bca547c21" ? (
+                  <p className="border rounded-full bg-green-50 font-semibold">
+                    {item?.price}
+                  </p>
+                ) : (
+                  <div className="text-red-600 font-semibold">
+                    {item?.pricePackage.map((price, index) => (
+                      <div key={index}>
+                        <p>
+                          {price.name} -- {price.price}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </td>
             <td className="border-2 p-2">
               <div className="flex flex-col justify-center items-center">
-                <img
-                  className="w-16 "
-                  src={`${import.meta.env.VITE_BASE_URL}${item?.custom?.logo}`}
-                  alt=""
-                />
-                <p>Name: {item?.custom?.name}</p>
-                <p>Email: {item?.custom?.email}</p>
-                <p>Pass: {item?.custom?.pass}</p>
-                <p>Mobile: {item?.custom?.mobile}</p>
+                <p>
+                  Demo Link:{" "}
+                  <a
+                    href={item?.demoLink}
+                    target="_blank"
+                    className="text-blue-500">
+                    Click Hare
+                  </a>{" "}
+                </p>
+                <p>Username: {item?.userName}</p>
+                <p>Pass: {item?.password}</p>
+
                 {item?.custom?.package && (
                   <p className="text-red-600 font-semibold">
-                    Mobile: {item?.custom?.package}
+                    Package: {item?.custom?.package}
                   </p>
-                )}
-                {item?.custom?.package ? (
-                  <p className="text-green-600 font-semibold">Website</p>
-                ) : (
-                  <p className="text-blue-600 font-semibold">Apps</p>
                 )}
               </div>
             </td>
             <td className="border-2 p-2 text-center ">
-              <div>
-                <p>
-                  {item?.payment?.method} -- {item?.payment?.type}
-                </p>
-                <p>{item?.payment?.number}</p>
-                <p></p>
-                <p className="font-bold">
-                  TransactionId: {item?.payment?.transactionId}
-                </p>
-                <p>Order Time: {item?.orderTime}</p>
+              <p className="font-bold">Discount: {item?.discount} %</p>
+              <div className="font-bold">
+                Discount after Price:{" "}
+                {item?.categoryId == "6650aabd63490d2bca547c21" ? (
+                  <>
+                    {" "}
+                    {parseInt(
+                      item?.price - (item?.price * item?.discount) / 100
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 gap-1">
+                      {item?.pricePackage.map((pack, index) => (
+                        <span
+                          className="bg-green-50 border border-dashed p-2 "
+                          key={index}>
+                          Package {index + 1} -{" "}
+                          {parseInt(
+                            pack?.price - (pack?.price * item?.discount) / 100
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </td>
             <td className="border-2 p-2 ">
               <p
-                className={`border rounded-full ${
+                className={`border rounded-full font-semibold ${
                   item.status == "Pending"
                     ? "bg-purple-50 font text-purple-600"
                     : item.status == "Processing"
                     ? "bg-blue-50 font text-blue-600"
-                    : item.status == "Complete"
+                    : item.status == true
                     ? "bg-green-50 font text-green-600"
                     : "bg-red-50 font text-red-600"
                 }`}>
-                {item?.status}
+                {item?.status == true ? "Active" : "De-Active"}
               </p>
             </td>
             {/* Action Area */}
             <th className="flex flex-col justify-center items-center gap-2 p-2">
               <button
-                className={`btn-xs p-1 rounded-md has-tooltip  text-white ${
+                onClick={() =>
+                  HandleStatusChange(
+                    axiosSecure,
+                    refetch,
+                    item._id,
+                    "product",
+                    !item.status
+                  )
+                }
+                className={`btn btn-xs p-1 rounded-md  text-white ${
                   item?.status === true ? "btn-success" : "bg-slate-300"
                 }`}>
                 <FaPowerOff></FaPowerOff>
               </button>
-              <Link
+              {/* <Link
                 to={`/leery/admin/dashboard/track-user/${item?._id}`}
                 className="btn-xs has-tooltip p-1 rounded-md bg-secondary text-white">
                 <FaEdit></FaEdit>
-              </Link>
-              <button className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
+              </Link> */}
+              <button onClick={() =>
+                  HandleDelete(
+                    axiosSecure, refetch , item._id, 'product'
+                  )
+                } className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
                 <FaTrash></FaTrash>
               </button>
             </th>
           </tr>
         ))}
       </Table>
+     <ToastContainer></ToastContainer>
     </div>
   );
 };

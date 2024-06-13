@@ -248,7 +248,7 @@ export const router = createBrowserRouter([
         element: <TrackCustomer></TrackCustomer>,
         loader: ({ params }) =>
           fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/v1/public/track/user/${
+            `${import.meta.env.VITE_BASE_URL}/api/v1/public/web/track/user/${
               params.id
             }`
           ),
