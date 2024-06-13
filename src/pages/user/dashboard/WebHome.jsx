@@ -28,7 +28,7 @@ const WebHome = () => {
             <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 my-4">
                 <div className='flex justify-between items-center bg-white p-4 rounded-2xl drop-shadow-xl'>
                     <div>
-                        <p className='font-semibold text-xl'>Balance</p>
+                        <p className='font-semibold text-xl'>Earning</p>
                         <p className='font-extrabold text-3xl'>{parseFloat(isWebUser?.user?.balance).toFixed(4)}</p>
                     </div>
                     <div onClick={() => refetch()} className={`bg-gradient-to-r ${softInfo.adminStat}  p-6 rounded-2xl text-white text-xl tooltip`} data-tip={'Refresh'}>
@@ -37,7 +37,7 @@ const WebHome = () => {
                 </div>
                 <div className='flex justify-between items-center bg-white p-4 rounded-2xl drop-shadow-xl'>
                     <div>
-                        <p className='font-semibold text-xl'>Daily Commission</p>
+                        <p className='font-semibold text-xl'>Total Ref</p>
                         <p className='font-extrabold text-3xl'>{isWebUser?.global?.dailyCommission}</p>
                     </div>
                     <div className={`bg-gradient-to-r ${softInfo.adminStat}  p-6 rounded-2xl text-white text-xl`}>
@@ -64,7 +64,7 @@ const WebHome = () => {
                 </div> */}
             </div>
 
-            <div className="grid md:grid-cols-2 gap-3">
+            {/* <div className="grid md:grid-cols-2 gap-3">
                 <div className="bg-white border border-dashed p-4 rounded-2xl drop-shadow-xl flex justify-start items-center flex-col md:flex-row gap-2">
                     <img width={50} src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png" alt="Telegram Logo" />
                     <p className="font-bold text-justify">প্রতিদিন এর আপডেট যানতে ও নতুন নতুন অনলাইন ইনকাম সোর্স যান্তে আমাদের যাথে যুক্ত থাকুন</p>
@@ -74,7 +74,7 @@ const WebHome = () => {
                     <p className="flex items-center gap-2 font-semibold text-justify"># {isWebUser?.global?.dailyNews}</p>
                     <p className="flex items-center gap-2 font-semibold text-red-500 text-justify"># {isWebUser?.global?.refNews}</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -66,9 +66,9 @@ const SidebarComponent = ({ toggled, setToggled }) => {
           <MenuItem icon={<MdBlock></MdBlock>} component={<NavLink to="/leery/admin/dashboard/rejected-withdraw" />}>Rejected</MenuItem>
         </SubMenu>
         <SubMenu label="Reseller Apply" icon={<FaMagento></FaMagento>}>
-          <MenuItem icon={<MdPending></MdPending>} component={<NavLink to="/leery/admin/dashboard/reseller" />}>Pending</MenuItem>
-          <MenuItem icon={<MdApproval></MdApproval>} component={<NavLink to="/leery/admin/dashboard/approved-reseller" />}>Approved</MenuItem>
-          <MenuItem icon={<MdBlock></MdBlock>} component={<NavLink to="/leery/admin/dashboard/rejected-reselller" />}>Rejected</MenuItem>
+          <MenuItem icon={<MdPending></MdPending>} component={<a href="/leery/admin/dashboard/reseller?type=pending" />}>Pending</MenuItem>
+          <MenuItem icon={<MdApproval></MdApproval>} component={<a href="/leery/admin/dashboard/reseller?type=approved" />}>Approved</MenuItem>
+          <MenuItem icon={<MdBlock></MdBlock>} component={<a href="/leery/admin/dashboard/reseller?type=reject" />}>Rejected</MenuItem>
         </SubMenu>
 
         <SubMenu label="Product" icon={<MdViewList></MdViewList>}>

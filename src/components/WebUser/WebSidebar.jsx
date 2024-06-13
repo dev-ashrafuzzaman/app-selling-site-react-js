@@ -60,11 +60,7 @@ const WebSidebar = ({ toggled, setToggled }) => {
           >
             <div>
               <div className="p-4 pb-8 flex justify-between items-center">
-                <img
-                  src="https://i.ibb.co/R3DKhng/Techmicrowork-logo.png" alt="Leery iT"
-                  className={`${collapsed ? "hidden" : "w-40"
-                    }`}
-                />
+              <p className='text-center font-bold text-xl'>{softInfo.name}</p>
                 <button
                   onClick={() => setCollapsed((curr) => !curr)}
                   className="p-1.5 md:rounded-lg bg-gray-50 hover:bg-gray-100 absolute end-0"
@@ -87,20 +83,20 @@ const WebSidebar = ({ toggled, setToggled }) => {
             >
               Inbox
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               icon={<MdWorkspaces></MdWorkspaces>}
               component={<NavLink to="/user/auth/dashboard/job" />}
               onClick={handleMenuItemClick}
             >
               Job
-            </MenuItem>
-            <MenuItem
+            </MenuItem> */}
+            {/* <MenuItem
               icon={<MdWallet></MdWallet>}
               component={<NavLink to="/user/auth/dashboard/daily-earn" />}
               onClick={handleMenuItemClick}
             >
               Daily Earn
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               icon={<FaWallet></FaWallet>}
               component={<NavLink to="/user/auth/dashboard/withdraw-type" />}

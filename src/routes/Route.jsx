@@ -184,11 +184,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "withdraw-type",
-        element: <WithdrawType></WithdrawType>,
-      },
-      {
-        path: "withdraw/:id",
-        element: <UserWithdraw>,</UserWithdraw>,
+        element: <UserWithdraw></UserWithdraw>,
       },
       {
         path: "withdraw-history",

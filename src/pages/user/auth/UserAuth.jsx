@@ -41,13 +41,14 @@ const UserAuth = () => {
   };
 
   const onSubmit = async (data) => {
+    setLodding(true);
     const uit = localStorage.getItem("uit");
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/web/user/login`,
         { email: data.email, password: data.password, uit }
       );
-      setLodding(true);
+     
       if (response.data.auth === true) {
         localStorage.setItem("uid", response.data.email);
         setTimeout(() => {

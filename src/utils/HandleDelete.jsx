@@ -63,7 +63,7 @@ export const HandleDeleteWithSingleImg = async (axiosSecure, refetch , info, rou
     if (result.isConfirmed) {
         const filenamesToDelete = [info?.url];
         const response = await axiosSecure.delete(`/public/upload/delete` , { data: { filenames: filenamesToDelete } });
-        if(response.data.delete == true){
+        if(response.data){
             await axiosSecure.delete(`/api/v1/admin/${route}/${info._id}`);
             refetch()
             SuccessToast('Delete Success')
@@ -73,6 +73,7 @@ export const HandleDeleteWithSingleImg = async (axiosSecure, refetch , info, rou
  
     }
 }
+
 export const HandleDeleteOrder = async (axiosSecure, refetch , info, route) => {
     const result = await Swal.fire({
         title: 'Are you sure?',
