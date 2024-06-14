@@ -33,7 +33,7 @@ const AddJob = () => {
                     vacancy: parseInt(data.vacancy),
                     attempt: parseInt(0),
                     img: data.img,
-                    jobPrice: parseFloat(data.jobPrice),
+                    jobPrice: parseInt(data.jobPrice),
                     description,
                     status: true,
                 };

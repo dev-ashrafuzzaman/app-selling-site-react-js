@@ -82,7 +82,11 @@ const Checkout = () => {
           productId: _id,
           title,
           categoryId,
-          price,
+          price: product?.isDiscount
+            ? parseInt(
+                product?.price - (product?.price * product?.discount) / 100
+              )
+            : price,
         },
         custom: {
           name: data.appName,
@@ -140,7 +144,12 @@ const Checkout = () => {
           productId: _id,
           title,
           categoryId,
-          price: selectedPackage?.price,
+          price: product?.isDiscount
+            ? parseInt(
+                selectedPackage?.price -
+                  (selectedPackage?.price * product?.discount) / 100
+              )
+            : selectedPackage?.price,
         },
         custom: {
           name: data.webName,
@@ -234,11 +243,45 @@ const Checkout = () => {
                     <td>{categoryName}</td>
                     <td>
                       {categoryId == "6650aabd63490d2bca547c21" ? (
-                        price
+                        <>
+                          {product?.isDiscount ? (
+                            <>
+                              <del className="text-red-500">
+                                মূল্য: {product?.price}
+                              </del>{" "}
+                              <p>
+                                ডিসকাউন্ট মূল্য :{" "}
+                                {parseInt(
+                                  product?.price -
+                                    (product?.price * product?.discount) / 100
+                                )}
+                              </p>
+                            </>
+                          ) : (
+                            <>মূল্য: {product?.price}</>
+                          )}
+                        </>
                       ) : (
                         <>
                           {selectedPackage ? (
-                            selectedPackage.price
+                            <>
+                              {product?.discount ? (
+                                <>
+                                  <div className="text-red-500">
+                                    <del>মূল্য: {selectedPackage?.price}</del>
+                                  </div>
+                                  ডিসকাউন্ট মূল্য:
+                                  {parseInt(
+                                    selectedPackage?.price -
+                                      (selectedPackage?.price *
+                                        product?.discount) /
+                                        100
+                                  )}
+                                </>
+                              ) : (
+                                <>মূল্য: {selectedPackage?.price}</>
+                              )}
+                            </>
                           ) : (
                             <p className="text-red-500">প্যাকেজ সিলেক্ট করুন</p>
                           )}

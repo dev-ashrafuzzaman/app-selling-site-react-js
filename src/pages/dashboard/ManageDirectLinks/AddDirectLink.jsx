@@ -20,7 +20,7 @@ const AddDirectLink = () => {
                 details: data.details,
                 count: parseInt(0),
                 status: true,
-                amount: parseFloat(data.amount),
+                amount: parseInt(data.amount),
             };
 
             await axiosSecure.post("/api/v1/admin/direct", { direct })

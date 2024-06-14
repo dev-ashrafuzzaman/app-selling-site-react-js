@@ -53,7 +53,7 @@ const LinkSetup = () => {
 
   // Commissition Data
   const comiData = {
-    dailyCommission: parseFloat(dailyCommission),
+    dailyCommission: parseInt(dailyCommission),
   };
   const handleChangeCom = (event) => {
     setDailyCommission(event.target.value);
@@ -61,7 +61,7 @@ const LinkSetup = () => {
 
   // Refer Bonus Data
   const refBonusData = {
-    referBonus: parseFloat(referBonus),
+    referBonus: parseInt(referBonus),
   };
   const handleChangeReferBonus = (event) => {
     setReferBonus(event.target.value);
@@ -119,10 +119,10 @@ const LinkSetup = () => {
 
   const withdrawRuleData = {
     withdrawRules: {
-      maxAmount: parseFloat(withdrawValues?.maxAmount),
-      minAmount: parseFloat(withdrawValues?.minAmount),
-      outAmount: parseFloat(withdrawValues?.outAmount),
-      minRef: parseFloat(withdrawValues?.minRef),
+      maxAmount: parseInt(withdrawValues?.maxAmount),
+      minAmount: parseInt(withdrawValues?.minAmount),
+      outAmount: parseInt(withdrawValues?.outAmount),
+      minRef: parseInt(withdrawValues?.minRef),
       withTime: withdrawValues?.withTime,
     },
   };

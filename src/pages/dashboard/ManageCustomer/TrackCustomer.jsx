@@ -148,7 +148,7 @@ const TrackCustomer = () => {
           Profile{" "}
           <span className="flex items-center gap-2 text-success border px-4 rounded-xl">
             <FaCoins></FaCoins>
-            {parseFloat(userInfo?.user?.balance).toFixed(4)}
+            {parseInt(userInfo?.user?.balance)}
           </span>{" "}
           <button
             onClick={() =>

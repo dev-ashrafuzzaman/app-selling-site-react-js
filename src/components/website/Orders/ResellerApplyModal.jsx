@@ -59,6 +59,7 @@ const ResellerApplyModal = ({ isOpen, setIsOpen }) => {
           if (data.data.modifiedCount > 0) {
             SuccessToast("Submit Success");
             reset();
+            window.location.href = '/user/orders'
           } else {
             ErrorToast(data.data.Error);
           }

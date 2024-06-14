@@ -79,7 +79,7 @@ const AddProduct = () => {
         demo: isDemo,
         demoLink: data.demoLink,
         details: data.details,
-        discount: data.discount ? data.discount : "",
+        discount: data.discount ? data.discount : 0,
         features: description,
         imageUrls: [response?.data.imageUrl],
         isDiscount: isDiscount,
@@ -90,7 +90,7 @@ const AddProduct = () => {
                 { name: "6 Month", price: data.halfMonth },
                 { name: "12 Month", price: data.fullMonth },
               ]
-            : "",
+            : [],
         price: parseInt(data.price) ? parseInt(data.price) : 0,
         title: data.title,
         userName: data.userName,
@@ -122,7 +122,7 @@ const AddProduct = () => {
     <div className="w-full py-10 md:px-10 px-2">
       {loading && <ScreenLoad></ScreenLoad>}
       <ToastContainer></ToastContainer>
-      <SectionTitle heading={"Add Banner"}></SectionTitle>
+      <SectionTitle heading={"Add Product"}></SectionTitle>
 
       <div className=" bg-[#F0F3F4] rounded-xl md:p-10 p-4">
         <div className="md:flex gap-6 w-full">
