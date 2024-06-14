@@ -65,7 +65,7 @@ const UserWithdraw = () => {
     }
   };
 
-  console.log(isWebUser);
+
   return (
     <>
       {" "}

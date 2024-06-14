@@ -17,7 +17,7 @@ const PendingWithdraw = () => {
     const { isPendingWithdraw, refetch, isPendingWithdrawLoading } = usePendingWithdraw(currentPage, pageSize, searchQuery);
     const [totalCount, setTotalCount] = useState(0);
     const totalPages = Math.ceil(totalCount / pageSize);
-console.log(isPendingWithdraw);
+
     
     const modalRef = useRef(null);
     const [modalData, setModalData] = useState(null);

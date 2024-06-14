@@ -3,7 +3,6 @@ import useWebUser from "../../../../hooks/web/useWebUser";
 
 const WithdrawType = () => {
     const [isWebUser] = useWebUser()
-    console.log(isWebUser);
     return (
         <div className="max-w-screen-sm mx-auto flex justify-center items-center my-10">
             <div className="grid md:grid-cols-2 gap-4">

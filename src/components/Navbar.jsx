@@ -18,7 +18,6 @@ const Navbar = ({ toggled, setToggled }) => {
         const verifyLicense = async () => {
             try {
                 const id = window.location.hostname;
-                console.log(id);
                 const response = await axios.get(`https://sgt.nextsleek.com/software/verify/${id}`);
 
                 if (response.data.validation) {

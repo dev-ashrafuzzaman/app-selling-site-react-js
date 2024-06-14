@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const webUtils = useWebUtils();
-  console.log(webUtils);
 
   const isScreenLoadVisible =
     webUtils?.loading || webUtils?.data === null || webUtils?.error;

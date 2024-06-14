@@ -59,7 +59,6 @@ const VisitEarnDetails = () => {
         try {
             await axiosSecure.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/visit-earn/claim/${isWebUser?.user?.id}`, { vId })
                 .then(data => {
-                    console.log(data);
                     if (data.data.acknowledged) {
                         setLoading(false)
                         SuccessToast('Claim Success')

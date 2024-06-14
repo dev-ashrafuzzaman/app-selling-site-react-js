@@ -4,9 +4,12 @@ import ScreenLoad from "../../../components/ScreenLoad";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { ToastContainer } from "react-toastify";
 import { handleGlobalUpdate } from "../../../utils/HandleGlobalUpdate";
+import { useForm } from "react-hook-form";
+import { ErrorToast, SuccessToast } from "../../../utils/Toastify";
 
 const LinkSetup = () => {
   const [axiosSecure] = useAxiosSecure();
+  const { register, handleSubmit, reset, setValue } = useForm();
   const [isGlobalData, refetch] = useGlobalData();
   const [loading, setLoading] = useState(false);
   const [dailyCommission, setDailyCommission] = useState(
@@ -49,15 +52,27 @@ const LinkSetup = () => {
     setTelegramGroup(isGlobalData?.result?.telegramGroup);
     setYoutube(isGlobalData?.result?.youtube);
     setTopNews(isGlobalData?.result?.topNews);
-  }, [isGlobalData]);
+    if (isGlobalData) {
+      setValue("bkashNumber", isGlobalData?.result?.paymentMathod[0].number);
+      setValue("bkashType", isGlobalData?.result?.paymentMathod[0].type);
+      setValue("nagadNumber", isGlobalData?.result?.paymentMathod[1].number);
+      setValue("nagadType", isGlobalData?.result?.paymentMathod[1].type);
 
-  // Commissition Data
-  const comiData = {
-    dailyCommission: parseInt(dailyCommission),
-  };
-  const handleChangeCom = (event) => {
-    setDailyCommission(event.target.value);
-  };
+      setValue("rocketNumber", isGlobalData?.result?.paymentMathod[2].number);
+      setValue("rocketType", isGlobalData?.result?.paymentMathod[2].type);
+
+      setValue("upayNumber", isGlobalData?.result?.paymentMathod[3].number);
+      setValue("upayType", isGlobalData?.result?.paymentMathod[3].type);
+    }
+  }, [isGlobalData, setValue]);
+
+  // // Commissition Data
+  // const comiData = {
+  //   dailyCommission: parseInt(dailyCommission),
+  // };
+  // const handleChangeCom = (event) => {
+  //   setDailyCommission(event.target.value);
+  // };
 
   // Refer Bonus Data
   const refBonusData = {
@@ -67,21 +82,21 @@ const LinkSetup = () => {
     setReferBonus(event.target.value);
   };
 
-  // Daily News
-  const dailyNewsData = {
-    dailyNews,
-  };
-  const handleDailyNews = (event) => {
-    setDailyNews(event.target.value);
-  };
+  // // Daily News
+  // const dailyNewsData = {
+  //   dailyNews,
+  // };
+  // const handleDailyNews = (event) => {
+  //   setDailyNews(event.target.value);
+  // };
 
-  // Refer News
-  const referNewsData = {
-    refNews,
-  };
-  const handleReferNews = (event) => {
-    setReferNews(event.target.value);
-  };
+  // // Refer News
+  // const referNewsData = {
+  //   refNews,
+  // };
+  // const handleReferNews = (event) => {
+  //   setReferNews(event.target.value);
+  // };
 
   // Channal Link
   const teleChanalData = {
@@ -104,7 +119,6 @@ const LinkSetup = () => {
     youtube,
   };
 
-  console.log(youtubeData);
   const handleyoutube = (event) => {
     setYoutube(event.target.value);
   };
@@ -125,6 +139,55 @@ const LinkSetup = () => {
       minRef: parseInt(withdrawValues?.minRef),
       withTime: withdrawValues?.withTime,
     },
+  };
+
+  const onSubmit = async (formData) => {
+    setLoading(true);
+    try {
+      const payment = [
+        {
+          name: "বিকাশ",
+          logo: "/public/upload/bkash.png",
+          number: formData.bkashNumber,
+          type: formData.bkashType,
+        },
+        {
+          name: "নগদ",
+          number: formData.nagadNumber,
+          logo: "/public/upload/nagad.png",
+          type: formData.nagadType,
+        },
+        {
+          name: "রকেট",
+          logo: "/public/upload/rocket.png",
+          number: formData.rocketNumber,
+          type: formData.rocketType,
+        },
+        {
+          name: "উপায় ",
+          logo: "/public/upload/upay.png",
+          number: formData.upayNumber,
+          type: formData.upayType,
+        },
+      ];
+      await axiosSecure
+        .patch(`/api/v1/admin/payment/edit/${isGlobalData?.result?._id}`, {
+          payment,
+        })
+        .then((data) => {
+          if (data) {
+            refetch();
+            SuccessToast("Update Success");
+            reset();
+            setLoading(false);
+          } else {
+            setLoading(false);
+            ErrorToast(data.data.Error);
+          }
+        });
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -433,6 +496,135 @@ const LinkSetup = () => {
               Update
             </button>
           </div>
+        </div>
+
+        {/* Bkash */}
+        <div className="w-full">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Bkash */}
+            <div className="flex gap-3 w-full">
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Bkash Number*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("bkashNumber", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Bkash Type*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("bkashType", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* Nagad */}
+            <div className="flex gap-3">
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Nagad Number*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("nagadNumber", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Nagad Type*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("nagadType", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Rocket */}
+            <div className="flex gap-3">
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Rocket Number*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("rocketNumber", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Rocket Type*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("rocketType", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Upay */}
+            <div className="flex gap-3">
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Upay Number*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("upayNumber", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+              <div className="gap-6 w-full">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Upay Type*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type here name"
+                    {...register("upayType", { required: true })}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end mt-4">
+              <button type="submit" className="btn btn-success text-white">
+                Update
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <ToastContainer></ToastContainer>

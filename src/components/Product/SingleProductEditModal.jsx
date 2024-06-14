@@ -51,7 +51,6 @@ const SingleProductEditModal = ({
 
   const onSubmit = async (formData) => {
     setIsLoading(true);
-    console.log("Check-1");
     try {
       const product = {
         demo: isDemo,
@@ -74,13 +73,9 @@ const SingleProductEditModal = ({
         status: true,
       };
 
-      console.log("check2");
-      console.log("id", productId);
-
       await axiosSecure
         .patch(`/api/v1/admin/product/edit/${productId}`, { product })
         .then((data) => {
-          console.log(data, "data");
           if (data) {
             refetch()
             setIsLoading(false);

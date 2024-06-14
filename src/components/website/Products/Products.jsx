@@ -11,8 +11,8 @@ const useQuery = () => {
 const Products = () => {
   const query = useQuery();
   const categoryId = query.get("categoryId");
-  const { products, loading, error, refetch } = useProducts(categoryId);
-  console.log(products);
+  const { products} = useProducts(categoryId);
+
 
   return (
     <>

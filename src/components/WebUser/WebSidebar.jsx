@@ -125,6 +125,7 @@ const WebSidebar = ({ toggled, setToggled }) => {
             >
               Refer
             </MenuItem>
+      
             <MenuItem
               icon={<MdPassword></MdPassword>}
               component={<NavLink to="/user/auth/dashboard/change-password" />}

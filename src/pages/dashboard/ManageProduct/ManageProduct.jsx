@@ -28,7 +28,7 @@ const ManageProduct = () => {
     totalCount,
   } = useProducts();
 
-  console.log(isProducts);
+
 
   const handleProductEdit = (data) => {
     setSelectedProduct(data);

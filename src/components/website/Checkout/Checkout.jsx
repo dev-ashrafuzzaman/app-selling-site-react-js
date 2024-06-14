@@ -38,7 +38,6 @@ const Checkout = () => {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState("");
   const navigate = useNavigate();
-  console.log(selectedPackage);
 
   // Apps Order Submit
   const onSubmit = async (data) => {

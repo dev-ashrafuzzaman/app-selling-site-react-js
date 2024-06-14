@@ -26,7 +26,6 @@ const TrackCustomer = () => {
   const { register, handleSubmit, reset } = useForm();
   const [axiosSecure] = useAxiosSecure();
   const [, refetch] = useAdmin();
-  console.log(userInfo);
   const [bonusValue, setBonusValue] = useState({
     amount: "",
   });

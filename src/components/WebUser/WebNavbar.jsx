@@ -47,6 +47,7 @@ const WebNavbar = ({ toggled, setToggled, isWebUser }) => {
                 <div className="flex-none hidden lg:block">
                     <ul className="menu menu-horizontal items-center gap-4">
                         {/* Navbar menu content here */}
+                        <a href='/' className='btn btn-sm'>Website</a>
                         <MdEmail className='text-indigo-800'></MdEmail>
                         <FaBell className='text-indigo-800'></FaBell>
                         <div className="dropdown dropdown-end">

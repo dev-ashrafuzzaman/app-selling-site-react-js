@@ -39,7 +39,7 @@ const ResellerTable = () => {
     totalCount,
   } = useReseller(initialPage, initialPageSize, initialSearchQuery, type);
 
-  console.log(isReseller);
+
   const [selectedOrder, setSelectedOrder] = useState({});
 
   const handleStatusChange = (order) => {

@@ -10,7 +10,6 @@ const Orders = () => {
   const [isUserOrders] = useUserOrders();
   const [isOpen, setIsOpen] = useState(false);
   const [isWebUser] = useWebUser();
-  console.log(isWebUser);
   return (
     <>
       <ResellerApplyModal

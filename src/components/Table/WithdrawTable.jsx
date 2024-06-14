@@ -1,7 +1,7 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { HandleDelete } from "../../utils/HandleDelete";
 const WithdrawTable = ({ data, sl, refetch, axiosSecure, global, user, showModal }) => {
-    console.log(data);
+
     return (
         <tr className='border-2 hover:bg-slate-100'>
             <th className='border-2'>{sl + 1}</th>

@@ -51,7 +51,6 @@ const ManageCustomer = () => {
         }
     }, [isCustomer]);
 
-console.log(isCustomer);
 
     return (
         <div className='md:px-8'>

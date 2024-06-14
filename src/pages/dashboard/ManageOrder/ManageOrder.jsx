@@ -20,7 +20,7 @@ const ManageOrder = () => {
   const [isProductViewOpen, setIsProductViewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {isSingleProduct} = useSingleProduct();
-  console.log(isSingleProduct);
+
   const {
     isOrders,
     refetch,
@@ -35,7 +35,7 @@ const ManageOrder = () => {
     totalCount,
   } = useOrders();
 
-  console.log(isOrders);
+
   const [selectedOrder, setSelectedOrder] = useState({});
 
   const handleStatusChange = (order) => {

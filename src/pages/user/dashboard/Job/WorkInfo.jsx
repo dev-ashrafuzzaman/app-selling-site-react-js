@@ -129,7 +129,6 @@ const WorkInfo = () => {
         try {
             await axiosSecure.post(`${import.meta.env.VITE_BASE_URL}/api/v1/web/user/job/claim/${isWebUser?.user?.id}`, { jobId, visitTime: getCurrentDateTime() })
                 .then(data => {
-                    console.log(data)
                     if (data.data.acknowledged === true) {
                         setLoading(false)
                         setVisitClick(true)

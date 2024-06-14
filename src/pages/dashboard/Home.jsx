@@ -5,7 +5,6 @@ import useAdminStat from '../../hooks/useAdminStat';
 import { FaFirstOrderAlt } from 'react-icons/fa6';
 const Home = () => {
     const [isAdminStat] = useAdminStat()
-    console.log(isAdminStat);
     return (
         <>
             <div className='my-10'>
