@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
-import Swal from "sweetalert2";
 import { SuccessToast } from "../../utils/Toastify";
 const OrderDelivaryModal = ({
   isOpen,
@@ -8,15 +7,19 @@ const OrderDelivaryModal = ({
   data,
   axiosSecure,
   refetch,
+  setIsLoading,
+  isLoading,
 }) => {
   const { register, handleSubmit, reset } = useForm();
 
   const onCancel = () => {
     reset();
     setIsOpen(false);
+    setIsLoading(false);
   };
 
   const onSubmit = async (input) => {
+    setIsLoading(true);
     try {
       const statusData = {
         downloadStatus: true,
@@ -27,14 +30,17 @@ const OrderDelivaryModal = ({
       await axiosSecure
         .patch(`/api/v1/admin/${"order"}/delivary/${data._id}`, { statusData })
         .then((data) => {
-          if (data.data.modifiedCount > 0) {
+          if (data) {
+            reset();
             refetch();
             SuccessToast("Change Success");
           }
         });
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
     }
+    setIsLoading(false);
     onCancel();
   };
 
@@ -61,9 +67,11 @@ const OrderDelivaryModal = ({
             className="btn btn-danger ">
             Cancel
           </button>
-          <button type="submit" className="btn btn-success text-white ">
-            submit
-          </button>
+          {!isLoading && (
+            <button type="submit" className="btn btn-success text-white ">
+              submit
+            </button>
+          )}
         </div>
       </form>
     </Modal>

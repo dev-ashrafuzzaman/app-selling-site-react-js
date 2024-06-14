@@ -11,12 +11,14 @@ import { MdDeliveryDining } from "react-icons/md";
 import OrderDelivaryModal from "../../../components/Order/OrderDelivaryModal";
 import ProductViewModal from "../../../components/Product/ProductViewModal";
 import useSingleProduct from "../../../hooks/useSingleProduct";
+import { ToastContainer } from "react-toastify";
 
 const ManageOrder = () => {
   const [axiosSecure] = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
   const [isDelivaryOpen, setIsDelivaryOpen] = useState(false);
   const [isProductViewOpen, setIsProductViewOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {isSingleProduct} = useSingleProduct();
   console.log(isSingleProduct);
   const {
@@ -51,6 +53,7 @@ const ManageOrder = () => {
 
   return (
     <div>
+       {isOrdersLoading || isLoading && <ScreenLoad />}
       <OrderStatusModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -64,6 +67,8 @@ const ManageOrder = () => {
         data={selectedOrder}
         axiosSecure={axiosSecure}
         refetch={refetch}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
       />
       <ProductViewModal
         isOpen={isProductViewOpen}
@@ -71,7 +76,7 @@ const ManageOrder = () => {
         data={selectedOrder}
         product={isSingleProduct}
       />
-      {isOrdersLoading && <ScreenLoad />}
+     
       <SectionTitle heading={"Orders Management"} />
       <Table
         head={[
@@ -193,6 +198,7 @@ const ManageOrder = () => {
           </tr>
         ))}
       </Table>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

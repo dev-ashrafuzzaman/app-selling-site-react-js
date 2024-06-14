@@ -40,7 +40,7 @@ const Refer = () => {
             <div className="bg-white rounded-2xl drop-shadow-xl border">
                 <div className="bg-gray-100 p-2 rounded-t-2xl text-xl font-bold">Refer Link</div>
                 <div className="p-4">
-                    <input type="text" defaultValue={`https://techmicrowork.wedonext.com/user/auth/register?inviteCode=${isWebUser?.user?.referCode}`} id="myReferLink" className="w-full bg-sky-100 p-4 rounded-2xl text-center font-bold" />
+                    <input type="text" defaultValue={`https://fasterappmaker.com/user/auth/register?inviteCode=${isWebUser?.user?.referCode}`} id="myReferLink" className="w-full bg-sky-100 p-4 rounded-2xl text-center font-bold" />
                     <div className="flex justify-center items-center my-2">
                         <button onClick={() => myReferLink()} className="flex justify-center items-center gap-1 btn bg-green-600 text-white">Copy Refer Link <MdCopyAll></MdCopyAll></button>
                     </div>
@@ -52,7 +52,7 @@ const Refer = () => {
                     isWebUser?.user?.refBy.map((ref, index) => <div
                         className="border-2 border-dashed p-4 flex items-center gap-2"
                         key={index}
-                    ><FaUser></FaUser>{ref}</div>)
+                    ><FaUser></FaUser>{ref.uId}</div>)
                 }
                 {
                     isWebUser?.user?.refBy.length === 0 && <>

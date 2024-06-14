@@ -6,6 +6,7 @@ import { MdOutbox, MdWallet } from "react-icons/md";
 import useUserWithdraw from "../../../hooks/web/useUserWithdraw";
 const WebHome = () => {
   const [isWebUser, refetch] = useWebUser();
+  
   const [isUserWithdraw] = useUserWithdraw();
   const totalAmount = isUserWithdraw
     ? calculateTotalAmount(
@@ -47,9 +48,9 @@ const WebHome = () => {
         </div>
         <div className="flex justify-between items-center bg-white p-4 rounded-2xl drop-shadow-xl">
           <div>
-            <p className="font-semibold text-xl">Total Ref</p>
+            <p className="font-semibold text-xl">Total Refer</p>
             <p className="font-extrabold text-3xl">
-              {isWebUser?.global?.dailyCommission}
+              {isWebUser?.user?.refBy?.length}
             </p>
           </div>
           <div

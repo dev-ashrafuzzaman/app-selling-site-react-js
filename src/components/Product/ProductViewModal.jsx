@@ -54,7 +54,7 @@ const singleProduct = product?.find(item=> item?._id === data?.product?.productI
               <ul>
                 {singleProduct?.features.map((feature, i) => (
                   <ul key={i}>
-                    {i + 1}. {feature}
+                    {i + 1}. {feature?.text}
                   </ul>
                 ))}
               </ul>

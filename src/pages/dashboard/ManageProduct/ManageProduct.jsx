@@ -1,15 +1,19 @@
-
 import Table from "../../../components/ui/Table";
-import { FaPowerOff, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPowerOff, FaTrash } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
 import useProducts from "../../../hooks/useProducts";
 import { HandleStatusChange } from "../../../utils/HandleStatusChange";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { ToastContainer } from "react-toastify";
 import { HandleDeleteProduct } from "../../../utils/HandleDelete";
+import SingleProductEditModal from "../../../components/Product/SingleProductEditModal";
+import { useState } from "react";
 
 const ManageProduct = () => {
   const [axiosSecure] = useAxiosSecure();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const {
     isProducts,
     refetch,
@@ -25,8 +29,22 @@ const ManageProduct = () => {
   } = useProducts();
 
   console.log(isProducts);
+
+  const handleProductEdit = (data) => {
+    setSelectedProduct(data);
+    setIsOpen(!isOpen);
+  };
   return (
     <div>
+      <SingleProductEditModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        data={selectedProduct}
+        refetch={refetch}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
+      />
+
       <SectionTitle heading={"Product Management"}></SectionTitle>
       <Table
         head={["#", "Image", "Product", "Demo", "Discount", "Status", "Action"]}
@@ -157,23 +175,30 @@ const ManageProduct = () => {
                 }`}>
                 <FaPowerOff></FaPowerOff>
               </button>
+              <div className="relative inline-block text-left">
+                <button
+                  className="btn-xs has-tooltip p-1 rounded-md bg-blue-600 text-white"
+                  onClick={() => handleProductEdit(item)}>
+                  <FaEdit />
+                </button>
+              </div>
               {/* <Link
                 to={`/leery/admin/dashboard/track-user/${item?._id}`}
                 className="btn-xs has-tooltip p-1 rounded-md bg-secondary text-white">
                 <FaEdit></FaEdit>
               </Link> */}
-              <button onClick={() =>
-                  HandleDeleteProduct(
-                    axiosSecure, refetch , item, 'product'
-                  )
-                } className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
+              <button
+                onClick={() =>
+                  HandleDeleteProduct(axiosSecure, refetch, item, "product")
+                }
+                className="btn-xs has-tooltip bg-red-600 p-1 rounded-md  text-white">
                 <FaTrash></FaTrash>
               </button>
             </th>
           </tr>
         ))}
       </Table>
-     <ToastContainer></ToastContainer>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

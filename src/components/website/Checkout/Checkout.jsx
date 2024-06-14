@@ -14,6 +14,7 @@ import InputField from "./InputField";
 import useUserSecure from "../../../hooks/web/useUserSecure";
 import { getCurrentDateTime } from "../../../utils/HandleCurrentDate";
 import ScreenLoad from "../../ScreenLoad";
+import useWebUser from "../../../hooks/web/useWebUser";
 
 const Checkout = () => {
   const {
@@ -27,6 +28,7 @@ const Checkout = () => {
   const product = useLoaderData();
   const { _id, title, categoryName, price, categoryId, pricePackage } = product;
   const webUtils = useWebUtils();
+  const [isWebUser] = useWebUser();
   const { WebUser } = useAuth();
   const [axiosSecure] = useUserSecure();
 
@@ -78,6 +80,7 @@ const Checkout = () => {
 
       const order = {
         uId: WebUser,
+        refMe: isWebUser?.user?.refMe,
         product: {
           productId: _id,
           title,
@@ -111,10 +114,10 @@ const Checkout = () => {
         .post(`/api/v1/web/user/checkout`, order)
         .then((data) => {
           if (data.data.insertedId) {
-            setLoading(false);
             SuccessToast("Submit Success");
             reset();
             setTimeout(() => {
+              setLoading(false);
               navigate("/user/orders");
             }, 2000);
           } else {
@@ -128,7 +131,9 @@ const Checkout = () => {
   };
 
   const onSubmit2 = async (data) => {
+    setLoading(true);
     if (!selectedPackage) {
+      setLoading(false);
       setError("package", {
         type: "manual",
         message: "একটি প্যাকেজ সিলেক্ট করুন।",
@@ -136,10 +141,10 @@ const Checkout = () => {
       return;
     }
 
-    setLoading(true);
     try {
       const order = {
         uId: WebUser,
+        refMe: isWebUser?.user?.refMe,
         product: {
           productId: _id,
           title,
@@ -174,10 +179,10 @@ const Checkout = () => {
         .post(`/api/v1/web/user/checkout`, order)
         .then((data) => {
           if (data.data.insertedId) {
-            setLoading(false);
             SuccessToast("Submit Success");
             reset();
             setTimeout(() => {
+              setLoading(false);
               navigate("/user/orders");
             }, 2000);
           } else {
