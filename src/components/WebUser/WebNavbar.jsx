@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { MdEmail, MdLogout } from 'react-icons/md';
+import { MdEmail, MdLogout, MdVerified } from 'react-icons/md';
 import { FaBell, FaUsers } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { softInfo } from '../../utils/info';
@@ -29,13 +29,13 @@ const WebNavbar = ({ toggled, setToggled, isWebUser }) => {
                     <div className="dropdown dropdown-end md:hidden block">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-8 rounded-full border border-indigo-800">
-                                <img className="w-[40px] rounded-full" src={'https://cdn-icons-png.flaticon.com/512/219/219969.png'} alt="User Image" />
+                                <img className="w-[40px] rounded-full" src={'https://cdn-icons-png.flaticon.com/128/3135/3135715.png'} alt="User Image" />
                             </div>
                         </label>
                         <ul tabIndex={0} className="menu menu-sm text-indigo-800 dropdown-content mt-3 z-[10] p-2 border bg-white shadow-md rounded-box w-64">
                             <li>
                                 <a className="justify-between">
-                                    <p className="flex justify-center items-center gap-2"><FaUsers></FaUsers> {isWebUser}</p>
+                                    <p className="flex justify-center items-center gap-2"><FaUsers></FaUsers> {isWebUser} <MdVerified className='text-blue-500'></MdVerified></p>
                                 </a>
                             </li>
                             <li onClick={() => HandleLogout(WebUserLogout, navigate)}><a><p className="flex justify-center items-center gap-2"><MdLogout></MdLogout>লগ আউট</p></a></li>
@@ -53,13 +53,13 @@ const WebNavbar = ({ toggled, setToggled, isWebUser }) => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-8 rounded-full border border-indigo-800">
-                                    <img className="w-[40px] rounded-full" src={'https://cdn-icons-png.flaticon.com/512/219/219969.png'} alt="User Image" />
+                                    <img className="w-[40px] rounded-full" src={'https://cdn-icons-png.flaticon.com/128/3135/3135715.png'} alt="User Image" />
                                 </div>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm text-indigo-800 dropdown-content mt-3 z-[10] p-2 border bg-white shadow-md rounded-box w-64">
                                 <li>
                                     <a className="justify-between">
-                                        <p className="flex justify-center items-center gap-2"><FaUsers></FaUsers> {isWebUser}</p>
+                                        <p className="flex justify-center items-center gap-2"><FaUsers></FaUsers> {isWebUser} <MdVerified className='text-blue-500'></MdVerified></p>
                                     </a>
                                 </li>
                                 <li onClick={() => HandleLogout(WebUserLogout, navigate)}><a><p className="flex justify-center items-center gap-2"><MdLogout></MdLogout>লগ আউট</p></a></li>

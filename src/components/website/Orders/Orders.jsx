@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavberWeb from "../Navber/NavberWeb";
 import useUserOrders from "../../../hooks/web/useUserOrders";
-import { MdDownload } from "react-icons/md";
+import { MdDownload, MdInfo } from "react-icons/md";
 import ResellerApplyModal from "./ResellerApplyModal";
 import { ToastContainer } from "react-toastify";
 import useWebUser from "../../../hooks/web/useWebUser";
@@ -17,19 +17,24 @@ const Orders = () => {
         setIsOpen={setIsOpen}></ResellerApplyModal>
       <NavberWeb></NavberWeb>
       <div className="max-w-screen-2xl mx-auto px-2 pt-24">
+        <div className="bg-red-50 p-6 rounded-2xl mb-4 border border-red-500">
+          {isWebUser?.user?.type == "Normal" && (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="btn btn-sm bg-green-600 text-white">
+              রিসেলার আবেদন করুন
+            </button>
+          )}
+          {isWebUser?.user?.type == "Reseller" && (
+            <p className="text-red-500 md:font-bold flex justify-start  gap-2">
+             <MdInfo></MdInfo> দয়া করে অপেক্ষা করুন আপনার রিসেলার এপ্লিকেশন স্টেটাস :{" "}
+              {isWebUser?.user?.resellerStatus}{" "}
+            </p>
+          )}
+        </div>
         <div className="bg-slate-100 md:p-10 p-4 rounded-3xl ">
           <div className="text-2xl my-6 px-2 font-semibold border-b-4 pb-2 flex justify-between items-center">
             <p className="">অর্ডার সমূহ:</p>
-            {isWebUser?.user?.type == "Normal" && (
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="btn btn-sm bg-green-600 text-white">
-                রিসেলার আবেদন করুন
-              </button>
-            )}
-            {
-              isWebUser?.user?.type == "Reseller"  && <p className="text-red-500">দয়া  করে অপেক্ষা করুন আপনার রিসেলার এপ্লিকেশন স্টেটাস : {isWebUser?.user?.resellerStatus} </p>
-            }
           </div>
           <div className="grid grid-cols-1 gap-4">
             {isUserOrders?.map((order, index) => (
@@ -88,7 +93,9 @@ const Orders = () => {
                 <div className="text-center bg-blue-500 rounded-b-2xl border-b-2 p-2 text-white">
                   {!order?.downloadStatus ? (
                     <>
-                      <p className="font-bold">{order?.time ? order?.time : 'অপেক্ষা করুন'}</p>
+                      <p className="font-bold">
+                        {order?.time ? order?.time : "অপেক্ষা করুন"}
+                      </p>
                     </>
                   ) : (
                     <>

@@ -3,6 +3,7 @@ import {
   MdBlock,
   MdNotificationAdd,
   MdRefresh,
+  MdVerified,
 } from "react-icons/md";
 import { ToastContainer } from "react-toastify";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -94,6 +95,7 @@ const TrackCustomer = () => {
     }
   };
 
+  console.log(userInfo);
   return (
     <div className="my-10">
       <div className="md:flex items-center gap-4 bg-white rounded-2xl p-4 drop-shadow-xl">
@@ -105,7 +107,11 @@ const TrackCustomer = () => {
           </div>
         </div>
         <div className="space-y-2 ">
-          <p className="text-sm font-extrabold">{userInfo?.user?.name}</p>
+          <p className="text-sm font-extrabold flex items-center gap-1">
+            {userInfo?.user?.name}{" "}
+            <MdVerified className="text-blue-500 text-xl"></MdVerified>
+          </p>
+          <p className="text-sm text-gray-400">Type: {userInfo?.user?.type}</p>
           <p className="text-sm text-gray-400">
             Joined: {userInfo?.user?.joinDate}
           </p>
@@ -151,7 +157,7 @@ const TrackCustomer = () => {
           </span>{" "}
           <button
             onClick={() =>
-              (window.location.href = `/leery/admin/dashboard/track-user/${userInfo?.user?._id}`)
+              (window.location.href = `/leery/admin/dashboard/track-user/${userInfo?.user?.email}`)
             }>
             <MdRefresh></MdRefresh>
           </button>
@@ -220,7 +226,7 @@ const TrackCustomer = () => {
             <div className="grid md:grid-cols-6 grid-cols-2 text-center font-bold gap-4">
               {userInfo?.user?.refBy?.map((ref, index) => (
                 <div className="border-2 border-dashed p-2" key={index}>
-                  {ref}
+                  {ref.uId}
                 </div>
               ))}
             </div>
@@ -228,74 +234,143 @@ const TrackCustomer = () => {
         </form>
       </div>
 
-      {userInfo?.user?.type == "reseller" ? (
+      {userInfo?.user?.type == "Reseller" ? (
         <>
-          {/* User Withdraw */}
-          <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
-            <p className="text-2xl font-bold mb-10">Withdraw List</p>
-
-            <div className="overflow-x-auto bg-white md:p-6 rounded-2xl">
-              <table className="table">
-                <thead className="font-bold text-black">
-                  <tr>
-                    <th className="border-b-2 border-black">#</th>
-                    <th className="border-b-2 border-black">User Info</th>
-                    <th className="border-b-2 border-black">Withdraw Info</th>
-                    <th className="border-b-2 border-black">Amounts</th>
-                    <th className="border-b-2 border-black">Status</th>
-                    <th className="border-b-2 border-black">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userInfo?.withdraw?.map((withdraw, index) => (
-                    <WithdrawTable
-                      key={withdraw._id}
-                      data={withdraw}
-                      sl={index}
-                      refetch={refetch}
-                      axiosSecure={axiosSecure}
-                      global={userInfo.global}
-                      user={userInfo.user}></WithdrawTable>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {/* Order Mangement */}
+          <div>
+            <SectionTitle heading={"Orders"}></SectionTitle>
+            <TruckTable
+              head={[
+                "#",
+                "Customer",
+                "Product",
+                "Orders",
+                "Payment",
+                "Status",
+              ]}>
+              {userInfo?.order?.map((item, index) => (
+                <tr
+                  key={index}
+                  className="border-2 hover:bg-slate-100 text-lg text-center">
+                  <th className="border-2 p-2">{index + 1}</th>
+                  <td className="border-2 p-2">
+                    <a className="text-sky-600 font-bold cursor-pointer p-2">
+                      {item?.uId}
+                    </a>
+                  </td>
+                  <td className="border-2 p-2">
+                    <div>
+                      <a className="text-sky-600 font-bold cursor-pointer p-2">
+                        View Details
+                      </a>
+                      <p className="font-bold">{item?.product?.title}</p>
+                      <p>Price: {item?.product?.price}</p>
+                    </div>
+                  </td>
+                  <td className="border-2 p-2">
+                    <div className="flex flex-col justify-center items-center">
+                      <img
+                        className="w-16 "
+                        src={`${import.meta.env.VITE_BASE_URL}${
+                          item?.custom?.logo
+                        }`}
+                        alt=""
+                      />
+                      <p>Name: {item?.custom?.name}</p>
+                      <p>Email: {item?.custom?.email}</p>
+                      <p>Pass: {item?.custom?.pass}</p>
+                      <p>Mobile: {item?.custom?.mobile}</p>
+                      {item?.custom?.package && (
+                        <p className="text-red-600 font-semibold">
+                          Mobile: {item?.custom?.package}
+                        </p>
+                      )}
+                      {item?.custom?.package ? (
+                        <p className="text-green-600 font-semibold">Website</p>
+                      ) : (
+                        <p className="text-blue-600 font-semibold">Apps</p>
+                      )}
+                    </div>
+                  </td>
+                  <td className="border-2 p-2 text-center ">
+                    <div>
+                      <p>
+                        {item?.payment?.method} -- {item?.payment?.type}
+                      </p>
+                      <p>{item?.payment?.number}</p>
+                      <p></p>
+                      <p className="font-bold">
+                        TransactionId: {item?.payment?.transactionId}
+                      </p>
+                      <p>Order Time: {item?.orderTime}</p>
+                    </div>
+                  </td>
+                  <td className="border-2 p-2 ">
+                    <p
+                      className={`border rounded-full ${
+                        item?.status == "Pending"
+                          ? "bg-purple-50 font text-purple-600"
+                          : item?.status == "Processing"
+                          ? "bg-blue-50 font text-blue-600"
+                          : item?.status == "Complete"
+                          ? "bg-green-50 font text-green-600"
+                          : "bg-red-50 font text-red-600"
+                      }`}>
+                      {item?.status}
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </TruckTable>
           </div>
 
-          {/* User Direct Submit */}
-          <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
-            <p className="text-2xl font-bold mb-10">Direct Submit List</p>
-
-            <div className="overflow-x-auto bg-white p-6 rounded-2xl">
-              <table className="table">
-                <thead className="font-bold text-black text-sm">
-                  <tr>
-                    <th className="border-b-2 border-black">#</th>
-                    <th className="border-b-2 border-black ">Visit Time</th>
-                    <th className="border-b-2 border-black ">Submit Time</th>
-                    <th className="border-b-2 border-black w-16">Prof</th>
-                    <th className="border-b-2 border-black ">Status</th>
-                    <th className="border-b-2 border-black">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userInfo?.directSubmit?.map((withdraw, index) => (
-                    <DirectSubmitTable
-                      key={withdraw._id}
-                      data={withdraw}
-                      sl={index}
-                      refetch={refetch}
-                      axiosSecure={axiosSecure}
-                      showModal1={showModal1}></DirectSubmitTable>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {/* User Withdraw */}
+          <div className="mt-32">
+            <SectionTitle heading={"Withdraw"}></SectionTitle>
+            <TruckTable
+              head={["#", "Withdraw", "Amount", "Status"]}>
+              {userInfo?.withdraw?.map((user, index) => (
+                <tr
+                  key={index}
+                  className="border-2 hover:bg-slate-100 text-lg text-center">
+                  <th className="border-2 p-2">{index + 1}</th>
+              
+                  <td className="border-2 p-2">
+                  <div className="font-semibold">
+                    <p>Withdraw Number: {user?.withdrawNumber}</p>
+                    <p>Withdraw Currency: {user?.currency}</p>
+                    <p className="badge-accent text-white px-2 rounded-2xl">Method: {user?.mathod}</p>
+                </div>
+                  </td>
+                  <td className="border-2 p-2">
+                  <div className="font-semibold">
+                    <p>Withdraw Amounts: {user?.outAmount}</p>
+                    <p>Withdraw Charge: {userInfo?.global?.withdrawRules?.outAmount}</p>
+                    <p className="font-bold">Final Amounts: {parseInt(user?.outAmount) + parseInt(userInfo?.global?.withdrawRules?.outAmount)}</p>
+                </div>
+                  </td>
+                  <td className="border-2 p-2 ">
+                    <p
+                      className={`border rounded-full ${
+                        user?.status == "Pending"
+                          ? "bg-purple-50 font text-purple-600"
+                          : user?.status == "Processing"
+                          ? "bg-blue-50 font text-blue-600"
+                          : user?.status == "Approved"
+                          ? "bg-green-50 font text-green-600"
+                          : "bg-red-50 font text-red-600"
+                      }`}>
+                      {user?.status}
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </TruckTable>
           </div>
 
           {/* User History */}
           <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
-            <p className="text-2xl font-bold mb-10">History List</p>
+          <SectionTitle heading={"History"}></SectionTitle>
 
             <div className="overflow-x-auto bg-white p-6 rounded-2xl">
               <table className="table">
@@ -410,6 +485,36 @@ const TrackCustomer = () => {
                 </tr>
               ))}
             </TruckTable>
+          </div>
+
+          {/* User History */}
+          <div className="w-full my-4 drop-shadow-xl bg-white rounded-2xl md:p-10 p-4">
+          <SectionTitle heading={"History"}></SectionTitle>
+
+            <div className="overflow-x-auto bg-white p-6 rounded-2xl">
+              <table className="table">
+                <thead className="font-bold text-black text-sm">
+                  <tr>
+                    <th className="border-b-2 border-black">#</th>
+                    <th className="border-b-2 border-black ">Date Time</th>
+                    <th className="border-b-2 border-black ">Post By</th>
+                    <th className="border-b-2 border-black">Type</th>
+                    <th className="border-b-2 border-black ">Amount</th>
+                    <th className="border-b-2 border-black">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userInfo?.history?.map((withdraw, index) => (
+                    <HistoryTable
+                      key={withdraw._id}
+                      data={withdraw}
+                      sl={index}
+                      refetch={refetch}
+                      axiosSecure={axiosSecure}></HistoryTable>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

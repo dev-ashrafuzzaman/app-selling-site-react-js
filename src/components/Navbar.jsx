@@ -79,7 +79,7 @@ const Navbar = ({ toggled, setToggled }) => {
                         <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                 <div className="w-8 rounded-full border border-indigo-800">
-                                    <img className="w-[40px] rounded-full" src={leerylogo} alt="surokkha gps" />
+                                    <img className="w-[40px] rounded-full" src={'https://cdn-icons-png.flaticon.com/128/3135/3135715.png'} alt="surokkha gps" />
                                 </div>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm text-indigo-800 dropdown-content mt-3 z-[1] p-2 border bg-white shadow-md rounded-box w-40">

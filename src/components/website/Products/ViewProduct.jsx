@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavberWeb from "../Navber/NavberWeb";
 import Footer from "../Footer";
 import { Link, useLoaderData } from "react-router-dom";
@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 const ViewProduct = () => {
   const product = useLoaderData();
   const { WebUser } = useAuth();
+  const [selectImage, setSelectImage] = useState(0);
   return (
     <div>
       <NavberWeb></NavberWeb>
@@ -14,11 +15,24 @@ const ViewProduct = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <figure className="bg-slate-100 p-4 rounded-xl">
             <img
-              src={`${import.meta.env.VITE_BASE_URL}${product?.imageUrls[0]}`}
+              src={`${import.meta.env.VITE_BASE_URL}${
+                product?.imageUrls[selectImage]
+              }`}
               alt={product?.title}
               className="mx-auto  object-cover rounded-md"
             />
+
+            <div className="grid  grid-cols-5 gap-4 my-4">
+              {product?.imageUrls.map((img, index) => (
+                <img
+                  onClick={() => setSelectImage(index)}
+                  className={`w-16 bg-white p-2 shadow-md h-[100px] ${selectImage == index ? ' border-[4px] border-green-500': ''}`}
+                  src={`${import.meta.env.VITE_BASE_URL}${img}`}
+                  key={index}></img>
+              ))}
+            </div>
           </figure>
+
           <div className="col-span-2  md:ml-4">
             <div>
               <h2 className="card-title text-3xl">{product?.title}</h2>

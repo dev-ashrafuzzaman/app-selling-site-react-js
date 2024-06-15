@@ -43,7 +43,7 @@ const AddVisitEarn = () => {
 
     // Check image size
     const imageSize = data.image[0].size / 1024; // in KB
-    if (imageSize > 1000) {
+    if (imageSize > 4000) {
       setLoading(false);
       ErrorToast("Image size exceeds 1000KB limit.");
       return;
