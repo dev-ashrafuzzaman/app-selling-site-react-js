@@ -75,7 +75,7 @@ const AddProduct = () => {
       const product = {
         categoryId: category,
         categoryName:
-          category == "6650aabd63490d2bca547c21" ? "এপপ্স" : "ওয়েবসাইট",
+          category == "6650aabd63490d2bca547c21" ? "অ্যাপস" : "ওয়েবসাইট",
         demo: isDemo,
         demoLink: data.demoLink,
         details: data.details,
@@ -169,7 +169,7 @@ const AddProduct = () => {
                 <option value="" disabled>
                   Select Category
                 </option>
-                <option value="6650aabd63490d2bca547c21">এপপ্স</option>
+                <option value="6650aabd63490d2bca547c21">অ্যাপস</option>
                 <option value="6650abfd63490d2bca547c24">ওয়েবসাইট</option>
               </select>
               {!category && (

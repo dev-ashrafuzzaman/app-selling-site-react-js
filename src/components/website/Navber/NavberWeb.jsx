@@ -21,11 +21,11 @@ const NavberWeb = () => {
   };
 
   return (
-    <div className="fixed top-0 w-full z-50 shadow-sm glass">
+    <div className="fixed bg-red-500 top-0 w-full z-50 shadow-sm  ">
       <div className="max-w-screen-2xl mx-auto ">
         <div className="navbar">
           <div className="navbar-start">
-            <div className="dropdown">
+            <div className="dropdown text-white">
               <div
                 tabIndex={0}
                 role="button"
@@ -63,7 +63,7 @@ const NavberWeb = () => {
                     <Link
                       to={"/software?categoryId=6650aabd63490d2bca547c21"}
                       onClick={handleMenuItemClick}>
-                      এপস
+                      অ্যাপস
                     </Link>
                   </li>
                   <li className="btn btn-error btn-sm text-white">
@@ -76,12 +76,12 @@ const NavberWeb = () => {
                 </ul>
               )}
             </div>
-            <a href="/" className="md:text-xl text-xs font-bold">
+            <a href="/" className="md:text-xl text-white text-[15px] font-extrabold w-full">
               FASTER APP MAKER
             </a>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal text-xl px-1">
+            <ul className="menu menu-horizontal text-xl px-1 text-white">
               <li>
                 <a href="/">হোম</a>
               </li>
@@ -90,7 +90,7 @@ const NavberWeb = () => {
               </li>
               <li>
                 <Link to={"/software?categoryId=6650aabd63490d2bca547c21"}>
-                  এপস
+                  অ্যাপস
                 </Link>
               </li>
               <li>
@@ -111,8 +111,8 @@ const NavberWeb = () => {
                 className="btn btn-ghost md:btn-lg btn-sm btn-circle avatar ">
                 <div className="w-10 rounded-full">
                   <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    alt="App User"
+                    src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
                   />
                 </div>
               </div>

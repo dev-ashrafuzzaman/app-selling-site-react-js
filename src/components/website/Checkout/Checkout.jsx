@@ -103,6 +103,7 @@ const Checkout = () => {
           type: selectedPayment?.type,
           number: selectedPayment?.number,
           transactionId: data.traxID,
+          payNumber: data.payNumber,
         },
         orderTime: getCurrentDateTime(),
         downloadStatus: false,
@@ -168,6 +169,7 @@ const Checkout = () => {
           type: selectedPayment?.type,
           number: selectedPayment?.number,
           transactionId: data.traxID,
+          payNumber: data.payNumber,
         },
         orderTime: getCurrentDateTime(),
         downloadStatus: false,
@@ -311,7 +313,7 @@ const Checkout = () => {
                     {/* App Logo Select */}
                     <div className="form-control mt-2">
                       <h1 className="mb-1">
-                        এপপ্স লোগো আপলোড করুন{" "}
+                      অ্যাপস লোগো আপলোড করুন{" "}
                         <span className="text-red-600">Max size 500kb</span>
                       </h1>
                       <div>
@@ -334,18 +336,18 @@ const Checkout = () => {
                       </div>
                       {errors.paymentMethod && (
                         <span className="text-red-500 text-base mt-1">
-                          এপপ্স লোগো আপলোড করুন
+                          অ্যাপস লোগো আপলোড করুন
                         </span>
                       )}
                     </div>
 
                     <div className="form-control">
                       <label htmlFor="appName" className="label label-text">
-                        এপপ্সের নাম
+                      অ্যাপস নাম
                       </label>
                       <input
                         type="text"
-                        placeholder="এপপ্সের নাম"
+                        placeholder="অ্যাপস নাম"
                         id="appName"
                         name="appName"
                         className="input input-bordered"
@@ -356,7 +358,7 @@ const Checkout = () => {
                       />
                       {errors.appName && (
                         <span className="text-red-500 text-base mt-1">
-                          একটি বৈধ এপপ্সের নাম লিখুন।
+                          একটি বৈধ অ্যাপস নাম লিখুন।
                         </span>
                       )}
                     </div>

@@ -3,7 +3,28 @@ import React from "react";
 const CheckoutBtn = ({ selectedNext, selectedPayment, register, errors }) => {
   return (
     <>
-      {selectedPayment && (
+      {selectedPayment && <>
+        <div className="form-control">
+          <label htmlFor="payNumber" className="label label-text text-red-600">
+          পেমেন্ট নাম্বার <span className="bg-red-500 tooltip px-4 py-2 text-white font-bold rounded-full" data-tip="যে নাম্বার থেকে টাকা পাঠাইছেন সেই নম্বরটি এখানে লিখুন!">i</span>
+          </label>
+          <input
+            type="number"
+            placeholder="পেমেন্ট নাম্বার"
+            id="payNumber"
+            name="payNumber"
+            className="input input-bordered"
+            autoComplete="payNumber"
+            {...register("payNumber", {
+              required: true,
+            })}
+          />
+          {errors.appName && (
+            <span className="text-red-500 text-base mt-1">
+              একটি বৈধ পেমেন্ট নাম্বার লিখুন।
+            </span>
+          )}
+        </div>
         <div className="form-control">
           <label htmlFor="traxID" className="label label-text text-red-600">
             ট্রান্সজেকশন আইডি
@@ -25,7 +46,7 @@ const CheckoutBtn = ({ selectedNext, selectedPayment, register, errors }) => {
             </span>
           )}
         </div>
-      )}
+      </>}
       <div className="form-control mt-6">
         {selectedNext && (
           <button

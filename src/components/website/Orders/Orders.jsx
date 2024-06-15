@@ -88,7 +88,7 @@ const Orders = () => {
                 <div className="text-center bg-blue-500 rounded-b-2xl border-b-2 p-2 text-white">
                   {!order?.downloadStatus ? (
                     <>
-                      <p className="font-bold">আনুমানিক ২ ঘন্টা অপেক্ষা করুন</p>
+                      <p className="font-bold">{order?.time ? order?.time : 'অপেক্ষা করুন'}</p>
                     </>
                   ) : (
                     <>

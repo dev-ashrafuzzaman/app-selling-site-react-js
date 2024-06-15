@@ -73,7 +73,7 @@ const UserAuth = () => {
     <>
       <NavberWeb></NavberWeb>
       <div>{lodding && <ScreenLoad></ScreenLoad>}</div>
-      <div className="flex justify-center   pt-28 md:pb-44 pb-10 px-2 md:px-0">
+      <div className="flex justify-center   py-28 md:pb-44  px-2 md:px-0">
         <div className="card shadow-2xl bg-base-100 md:p-10 w-[700px]">
           <div className="card-body">
             <div className="text-center space-y-4 mb-6">

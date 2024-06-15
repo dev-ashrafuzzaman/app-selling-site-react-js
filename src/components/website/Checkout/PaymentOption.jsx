@@ -21,22 +21,24 @@ const PaymentOption = ({
           <div
             onClick={() => handlePayment(item)}
             key={index}
-            className={`border flex flex-col justify-center items-center  border-dashed p-4 rounded-2xl  hover:shadow-slate-300 hover:shadow-md cursor-pointer ${
+            className={`border flex flex-col justify-center items-center  border-dashed pt-4 rounded-2xl  hover:shadow-slate-300 hover:shadow-md cursor-pointer ${
               selectedPayment?.name === item?.name ? "border-green-600" : ""
             }`}>
             <img
               src={`${import.meta.env.VITE_BASE_URL}${item.logo}`}
               alt="payment"
-              className="h-[100px]"
+              className="h-[100px] rounded-2xl"
             />
-            <div className="divider"></div>
-            <p className="font-bold text-4xl">{item.name}</p>
-            <p className="font-bold text-2xl flex justify-center items-center gap-2">
-              {item.number}{" "}
-              <MdCopyAll
-                onClick={() => handleCopyNumber(item?.number)}></MdCopyAll>
-            </p>
-            <p className="text-2xl">{item.type}</p>
+      
+            <div className="bg-red-500 w-full p-4 text-center text-white mt-5 border border-t-[6px] rounded-b-2xl border-t-blue-500">
+              <p className="font-bold text-4xl">{item.name}</p>
+              <p className="font-bold text-2xl flex justify-center items-center gap-2">
+                {item.number}{" "}
+                <MdCopyAll
+                  onClick={() => handleCopyNumber(item?.number)}></MdCopyAll>
+              </p>
+              <p className="text-2xl">{item.type}</p>
+            </div>
           </div>
         ))}
       </div>
