@@ -13,7 +13,7 @@ const Products = () => {
   const categoryId = query.get("categoryId");
   const { products} = useProducts(categoryId);
 
-
+  const product = products?.filter((item) => item.status === true);
   return (
     <>
       <NavberWeb></NavberWeb>
@@ -21,8 +21,8 @@ const Products = () => {
         <div className="border-b-2 mb-6 mt-10 text-xl font-bold">
           সকল সফটওয়্যার
         </div>
-        <div className="grid md:grid-cols-5 gap-4">
-          {products?.map((item, index) => (
+        <div className="grid md:grid-cols-4 gap-4">
+          {product?.map((item, index) => (
             <SingleProduct key={index} product={item}></SingleProduct>
           ))}
         </div>

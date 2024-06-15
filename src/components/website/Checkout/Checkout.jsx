@@ -64,9 +64,9 @@ const Checkout = () => {
 
     // Check image size
     const imageSize = data.image[0].size / 1024; // in KB
-    if (imageSize > 1000) {
+    if (imageSize > 5000) {
       setLoading(false);
-      ErrorToast("Image size exceeds 1000KB limit.");
+      ErrorToast("Image size exceeds 5MB limit.");
       return;
     }
 
@@ -314,7 +314,7 @@ const Checkout = () => {
                     <div className="form-control mt-2">
                       <h1 className="mb-1">
                       অ্যাপস লোগো আপলোড করুন{" "}
-                        <span className="text-red-600">Max size 500kb</span>
+                        <span className="text-red-600">Max size 5MB</span>
                       </h1>
                       <div>
                         <div className="flex justify-between">

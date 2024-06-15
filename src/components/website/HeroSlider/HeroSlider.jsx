@@ -11,6 +11,7 @@ import Footer from "../Footer";
 
 const HeroSlider = ({ data, products, categorys }) => {
   const banner = data?.banner?.filter((item) => item.status === true);
+  const product = products?.filter((item) => item.status === true);
   return (
     <div className="max-w-screen-2xl mx-auto rounded-3xl md:h-[100px] h-[200px]">
       <Swiper
@@ -35,7 +36,7 @@ const HeroSlider = ({ data, products, categorys }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="pe-20 md:pe-0">
+      <div className="md:pe-0">
         <HeadNotice notice={data?.topNews}></HeadNotice>
       </div>
       <ContactSection
@@ -43,7 +44,7 @@ const HeroSlider = ({ data, products, categorys }) => {
         whatsapp={data?.telegramGroup}
         youtube={data?.youtube}></ContactSection>
       <Category categorys={categorys}></Category>
-      <AllProducts products={products}></AllProducts>
+      <AllProducts products={product}></AllProducts>
       <Footer></Footer>
     </div>
   );

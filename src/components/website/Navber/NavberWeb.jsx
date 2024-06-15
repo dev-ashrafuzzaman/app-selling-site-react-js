@@ -76,7 +76,7 @@ const NavberWeb = () => {
                 </ul>
               )}
             </div>
-            <a href="/" className="md:text-xl text-white text-[15px] font-extrabold w-full">
+            <a href="/" className="md:text-xl text-white text-[13px] font-extrabold w-full">
               FASTER APP MAKER
             </a>
           </div>

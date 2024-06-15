@@ -15,7 +15,7 @@ const ViewProduct = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <figure className="bg-slate-100 p-4 rounded-xl">
             <img
-              src={`${import.meta.env.VITE_BASE_URL}${
+              src={`${import.meta.env.VITE_BASE_URL}${ 
                 product?.imageUrls[selectImage]
               }`}
               alt={product?.title}

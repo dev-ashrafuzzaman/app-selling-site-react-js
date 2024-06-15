@@ -21,7 +21,7 @@ const SingleProduct = ({ product }) => {
       className={`card bg-base-100 shadow-xl border-2 border-dashed cursor-pointer`}>
       <Link to={`/product/details/${_id}`}>
         <div
-          className="bg-red-500  flex  md:h-[550px] h-[450px] rounded-2xl bg-cover"
+          className="bg-red-500  flex rounded-2xl h-[250px] md:h-[320px]  bg-center bg-cover"
           style={{
             backgroundImage: `url(${`${import.meta.env.VITE_BASE_URL}${
               imageUrls[0]

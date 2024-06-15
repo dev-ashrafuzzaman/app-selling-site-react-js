@@ -6,8 +6,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { softInfo } from '../../utils/info';
 import useAuth from '../../hooks/useAuth';
 import { HandleLogout } from '../../utils/HandleLogout';
-import { FaHistory, FaLayerGroup, FaWallet } from 'react-icons/fa';
+import { FaHistory, FaLayerGroup, FaSellcast, FaWallet } from 'react-icons/fa';
 import useWebUser from '../../hooks/web/useWebUser';
+import { FaJediOrder } from 'react-icons/fa6';
 
 const WebSidebar = ({ toggled, setToggled }) => {
   const { WebUserLogout } = useAuth();
@@ -97,6 +98,20 @@ const WebSidebar = ({ toggled, setToggled }) => {
             >
               Daily Earn
             </MenuItem> */}
+            <MenuItem
+              icon={<FaJediOrder></FaJediOrder>}
+              component={<NavLink to="/user/auth/dashboard/my-order" />}
+              onClick={handleMenuItemClick}
+            >
+              My Order
+            </MenuItem>
+            <MenuItem
+              icon={<FaSellcast></FaSellcast>}
+              component={<NavLink to="/user/auth/dashboard/sell-products" />}
+              onClick={handleMenuItemClick}
+            >
+              Sell Products
+            </MenuItem>
             <MenuItem
               icon={<FaWallet></FaWallet>}
               component={<NavLink to="/user/auth/dashboard/withdraw-type" />}

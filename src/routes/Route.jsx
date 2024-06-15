@@ -54,6 +54,8 @@ import ManageOrder from "../pages/dashboard/ManageOrder/ManageOrder";
 import ManageProduct from "../pages/dashboard/ManageProduct/ManageProduct";
 import AddProduct from "../pages/dashboard/ManageProduct/AddProduct";
 import ResellerTable from "../pages/dashboard/Reseller/ResellerTable";
+import ResellerOrder from "../components/website/Orders/ResellerOrder";
+import ResellerSells from "../components/website/Orders/ResellerSells";
 
 export const router = createBrowserRouter([
   {
@@ -131,6 +133,14 @@ export const router = createBrowserRouter([
       {
         path: "user-inbox",
         element: <UserInbox></UserInbox>,
+      },
+      {
+        path: "my-order",
+        element: <ResellerOrder></ResellerOrder>,
+      },
+      {
+        path: "sell-products",
+        element: <ResellerSells></ResellerSells>,
       },
       {
         path: "job",

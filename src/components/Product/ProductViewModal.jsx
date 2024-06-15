@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+
 import Modal from "../ui/Modal";
 
 const ProductViewModal = ({
@@ -7,6 +7,8 @@ const ProductViewModal = ({
   data,
   product
 }) => {
+
+  
 
 const singleProduct = product?.find(item=> item?._id === data?.product?.productId)
 
@@ -18,35 +20,85 @@ const singleProduct = product?.find(item=> item?._id === data?.product?.productI
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Product Details">
-      <form>
+      <div>
       <div className="max-w-screen-2xl mx-auto px-2 pt-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3">
           <figure className="bg-slate-100 p-4 rounded-xl">
             <img
               src={`${import.meta.env.VITE_BASE_URL}${singleProduct?.imageUrls[0]}`}
               alt={singleProduct?.title}
               className="mx-auto  object-cover rounded-md"
             />
+            
           </figure>
           <div className="col-span-2  md:ml-4">
             <div>
               <h2 className="card-title text-3xl">{singleProduct?.title}</h2>
               <p className="text-xl font-semibold">ধরণ: {singleProduct?.categoryName}</p>
               {/* <h3 className="card-title text-xl">brand: {brand}</h3> */}
-              <div className="text-xl font-semibold text-green-700 mb-4">
-                মূল্য:{" "}
+              <div className="text-xl  font-semibold text-green-700 mb-4">
                 {singleProduct?.categoryId == "6650aabd63490d2bca547c21" ? (
-                  singleProduct?.price
-                ) : (
                   <>
-                    {singleProduct?.pricePackage?.map((item, index) => (
-                      <li key={index}>
-                        {item.name} -- {item.price} টাকা
-                      </li>
-                    ))}
+                    {singleProduct?.isDiscount ? (
+                      <>
+                        <del className="text-red-500">
+                          মূল্য: {singleProduct?.price}
+                        </del>{" "}
+                        <p>
+                          ডিসকাউন্ট মূল্য :{" "}
+                          {parseInt(
+                            singleProduct?.price -
+                              (singleProduct?.price * singleProduct?.discount) / 100
+                          )}
+                        </p>
+                      </>
+                    ) : (
+                      <>মূল্য: {singleProduct?.price}</>
+                    )}
+                  </>
+                ) : (
+                  // website singleProduct
+                  <>
+                    {singleProduct?.isDiscount ? (
+                      <>
+                        <ul>
+                          {singleProduct?.pricePackage?.map((item, index) => (
+                            <li key={index}>
+                              <del className="text-red-500">
+                                {index + 1}. মূল্য: {item.name} -- {item.price}{" "}
+                                টাকা
+                              </del>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="my-4">
+                          <ul>
+                            {singleProduct?.pricePackage?.map((item, index) => (
+                              <li key={index}>
+                                {index + 1}. ডিসকাউন্ট মূল্য: {item.name} --{" "}
+                                {parseInt(
+                                  item?.price -
+                                    (item?.price * singleProduct?.discount) / 100
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <ul>
+                          {singleProduct?.pricePackage?.map((item, index) => (
+                            <li key={index}>
+                              {item.name} -- {item.price} টাকা
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                   </>
                 )}{" "}
-                
               </div>
             </div>
             <div className="my-4">
@@ -99,7 +151,7 @@ const singleProduct = product?.find(item=> item?._id === data?.product?.productI
             Cancel
           </button>
         </div>
-      </form>
+      </div>
     </Modal>
   );
 };
