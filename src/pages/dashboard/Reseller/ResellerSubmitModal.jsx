@@ -21,6 +21,12 @@ const ResellerSubmitModal = ({ isOpen, setIsOpen, data }) => {
         </div>
         <div className="flex gap-3 justify-end">
           <button
+            onClick={''}
+            type="button"
+            className="btn bg-green-500  text-white">
+            Download
+          </button>
+          <button
             onClick={() => onCancel()}
             type="button"
             className="btn bg-red-500  text-white">

@@ -24,7 +24,6 @@ import WebHome from "../pages/user/dashboard/WebHome";
 import UserInbox from "../pages/user/dashboard/Inbox/UserInbox";
 import Job from "../pages/user/dashboard/Job/Job";
 import DailyEarn from "../pages/user/dashboard/DailyEarn/DailyEarn";
-import WithdrawType from "../pages/user/dashboard/Withdraw/WithdrawType";
 import WithdrawHistory from "../pages/user/dashboard/WithdrawHistory/WithdrawHistory";
 import Refer from "../pages/user/dashboard/Refer/Refer";
 import WorkInfo from "../pages/user/dashboard/Job/WorkInfo";
@@ -47,7 +46,6 @@ import ManageVisitEarn from "../pages/dashboard/ManageBanner/ManageVisitEarn";
 import ViewProduct from "../components/website/Products/ViewProduct";
 import Checkout from "../components/website/Checkout/Checkout";
 import Orders from "../components/website/Orders/Orders";
-import AllProducts from "../components/website/Products/AllProducts";
 import Products from "../components/website/Products/Products";
 import AdminRoute from "./AdminRoute";
 import ManageOrder from "../pages/dashboard/ManageOrder/ManageOrder";
@@ -272,6 +270,7 @@ export const router = createBrowserRouter([
         path: "add-product",
         element: <AddProduct></AddProduct>,
       },
+     
       {
         path: "users-payment",
         element: <ManagePayment></ManagePayment>,

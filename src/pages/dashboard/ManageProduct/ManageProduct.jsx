@@ -177,7 +177,7 @@ const ManageProduct = () => {
               </button>
               <div className="relative inline-block text-left">
                 <button
-                  className="btn-xs has-tooltip p-1 rounded-md bg-blue-600 text-white"
+                  className="btn-xs has-tooltip p-1 rounded-md bg-purple-600 text-white"
                   onClick={() => handleProductEdit(item)}>
                   <FaEdit />
                 </button>
