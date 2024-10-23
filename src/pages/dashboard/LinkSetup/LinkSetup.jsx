@@ -211,7 +211,7 @@ const LinkSetup = () => {
         {/* Daily Commission */}
         <div className="w-full">
           <div className="label">
-            <span className="label-text">Refer Bonus</span>
+            <span className="label-text">Reseller Commission (%)</span>
           </div>
           <div className="join w-full">
             <div className="w-full">
