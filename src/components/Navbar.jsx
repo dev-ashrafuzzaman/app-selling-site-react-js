@@ -18,7 +18,7 @@ const Navbar = ({ toggled, setToggled }) => {
         const verifyLicense = async () => {
             try {
                 const id = window.location.hostname;
-                const response = await axios.get(`https://sgt.surokkhaagro.com/software/verify/fasterappmaker.com`);
+                const response = await axios.get(`https://sgt.surokkhaagro.com/software/verify/${id}`);
 
                 if (response.data.validation) {
                     setIsLicenseVerified(response.data);
