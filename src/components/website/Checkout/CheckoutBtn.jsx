@@ -1,10 +1,12 @@
 import React from "react";
 
-const CheckoutBtn = ({ selectedNext, selectedPayment, register, errors }) => {
+const CheckoutBtn = ({ selectedNext, selectedPayment, price, register, errors }) => {
+  console.log(price);
   return (
     <>
       {selectedPayment && <>
         <div className="form-control">
+          <div className="text-center font-bold border rounded-lg p-2 text-lg">মূল্য: {price}</div>
           <label htmlFor="payNumber" className="label label-text text-red-600">
           পেমেন্ট নাম্বার <span className="bg-red-500 tooltip px-4 py-2 text-white font-bold rounded-full" data-tip="যে নাম্বার থেকে টাকা পাঠাইছেন সেই নম্বরটি এখানে লিখুন!">i</span>
           </label>

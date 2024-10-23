@@ -102,7 +102,7 @@ const ResellerTable = () => {
                   <button
                     onClick={() => handleSubmitView(item)}
                     className="text-sky-600 font-bold cursor-pointer p-2">
-                    View Details
+                    View Image
                   </button>
                 )}
 

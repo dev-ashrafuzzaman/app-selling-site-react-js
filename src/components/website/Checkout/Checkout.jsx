@@ -313,7 +313,7 @@ const Checkout = () => {
                     {/* App Logo Select */}
                     <div className="form-control mt-2">
                       <h1 className="mb-1">
-                      অ্যাপস লোগো আপলোড করুন{" "}
+                        অ্যাপস লোগো আপলোড করুন{" "}
                         <span className="text-red-600">Max size 5MB</span>
                       </h1>
                       <div>
@@ -343,7 +343,7 @@ const Checkout = () => {
 
                     <div className="form-control">
                       <label htmlFor="appName" className="label label-text">
-                      অ্যাপস নাম
+                        অ্যাপস নাম
                       </label>
                       <input
                         type="text"
@@ -384,6 +384,14 @@ const Checkout = () => {
 
                 {/* Checkout btn */}
                 <CheckoutBtn
+                  price={
+                    product?.isDiscount
+                      ? parseInt(
+                          product?.price -
+                            (product?.price * product?.discount) / 100
+                        )
+                      : price
+                  }
                   selectedNext={selectedNext}
                   selectedPayment={selectedPayment}
                   errors={errors}
@@ -467,6 +475,14 @@ const Checkout = () => {
 
                 {/* Checkout btn */}
                 <CheckoutBtn
+                  price={
+                    product?.isDiscount
+                      ? parseInt(
+                          selectedPackage?.price -
+                            (selectedPackage?.price * product?.discount) / 100
+                        )
+                      : selectedPackage?.price
+                  }
                   selectedNext={selectedNext}
                   selectedPayment={selectedPayment}
                   errors={errors}
