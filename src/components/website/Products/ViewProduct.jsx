@@ -22,7 +22,7 @@ const ViewProduct = () => {
               className="mx-auto  object-cover rounded-md"
             />
 
-            <div className="grid  grid-cols-5 gap-4 my-4">
+            {/* <div className="grid  grid-cols-5 gap-4 my-4">
               {product?.imageUrls.map((img, index) => (
                 <img
                   onClick={() => setSelectImage(index)}
@@ -30,7 +30,7 @@ const ViewProduct = () => {
                   src={`${import.meta.env.VITE_BASE_URL}${img}`}
                   key={index}></img>
               ))}
-            </div>
+            </div> */}
           </figure>
 
           <div className="col-span-2  md:ml-4">

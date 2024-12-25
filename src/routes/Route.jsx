@@ -54,6 +54,7 @@ import AddProduct from "../pages/dashboard/ManageProduct/AddProduct";
 import ResellerTable from "../pages/dashboard/Reseller/ResellerTable";
 import ResellerOrder from "../components/website/Orders/ResellerOrder";
 import ResellerSells from "../components/website/Orders/ResellerSells";
+import OrderDetails from "../components/website/Orders/OrderDetails";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,20 @@ export const router = createBrowserRouter([
         <Orders></Orders>
       </PrivateRoute>
     ),
+  },
+  {
+    path: "user/order-details/:id",
+    element: (
+      <PrivateRoute>
+        <OrderDetails></OrderDetails>
+      </PrivateRoute>
+    ),
+    loader: ({ params }) =>
+      fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/web/public/order-details/${
+          params.id
+        }`
+      ),
   },
   {
     path: "product/details/:id",

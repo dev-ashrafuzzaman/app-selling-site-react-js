@@ -5,6 +5,7 @@ import { MdDownload, MdInfo } from "react-icons/md";
 import ResellerApplyModal from "./ResellerApplyModal";
 import { ToastContainer } from "react-toastify";
 import useWebUser from "../../../hooks/web/useWebUser";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const [isUserOrders] = useUserOrders();
@@ -101,12 +102,11 @@ const Orders = () => {
                     <>
                       <div className="flex justify-center items-center font-semibold">
                         ডাউনলোড করুন{" "}
-                        <a
-                          href={order.link}
-                          target="_blank"
+                        <Link
+                          to={`/user/order-details/${order?._id}`}
                           className="bg-white p-2 ml-2 rounded-full text-black flex justify-center items-center btn animate-bounce transition duration-700 ease-in-out btn-success  shadow-lg shadow-red-300 btn-sm drop-shadow-lg">
                           <MdDownload></MdDownload>
-                        </a>
+                        </Link>
                       </div>
                     </>
                   )}
