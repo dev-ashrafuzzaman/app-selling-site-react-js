@@ -95,7 +95,6 @@ const TrackCustomer = () => {
     }
   };
 
-  console.log(userInfo);
   return (
     <div className="my-10">
       <div className="md:flex items-center gap-4 bg-white rounded-2xl p-4 drop-shadow-xl">

@@ -1,7 +1,6 @@
 import React from "react";
 
 const CheckoutBtn = ({ selectedNext, selectedPayment, price, register, errors }) => {
-  console.log(price);
   return (
     <>
       {selectedPayment && <>

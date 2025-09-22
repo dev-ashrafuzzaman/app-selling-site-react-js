@@ -132,7 +132,6 @@ export const HandleDeleteProduct = async (
     const response = await axiosSecure.delete(`/public/upload/delete`, {
       data: { filenames: filenamesToDelete },
     });
-    console.log(response , 'ppi');
     if (response) {
       await axiosSecure.delete(`/api/v1/admin/${route}/${info._id}`);
       refetch();

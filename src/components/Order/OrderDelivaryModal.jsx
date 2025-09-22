@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { SuccessToast } from "../../utils/Toastify";
 import { useState } from "react";
+import ScreenLoad from "../ScreenLoad";
 
 const OrderDeliveryModal = ({
   isOpen,
@@ -9,11 +10,10 @@ const OrderDeliveryModal = ({
   data,
   axiosSecure,
   refetch,
-  setIsLoading,
-  isLoading,
 }) => {
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [deliveryType, setDeliveryType] = useState("Website");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onCancel = () => {
     reset();
@@ -48,7 +48,6 @@ const OrderDeliveryModal = ({
 
         if (!appFile || !adminPanelFile) {
           console.error("Both app and admin panel files are required.");
-          setIsLoading(false);
           return;
         }
 
@@ -59,7 +58,6 @@ const OrderDeliveryModal = ({
           "/public/upload/file",
           appFormData
         );
-        console.log(appFileResponse, "app file res");
         // Upload Admin Panel File
         const adminFormData = new FormData();
         adminFormData.append("file", adminPanelFile);
@@ -67,7 +65,6 @@ const OrderDeliveryModal = ({
           "/public/upload/file",
           adminFormData
         );
-        console.log(adminPanelFileResponse, "admin file res");
         statusData.deliveryDetails = {
           appFile: appFileResponse.data.fileName, // Assuming the API returns the file path or URL
           adminPanelFile: adminPanelFileResponse.data.fileName, // Assuming the API returns the file path or URL
@@ -76,16 +73,13 @@ const OrderDeliveryModal = ({
         };
       }
 
-      console.log(statusData, "apps");
-      console.log(input, "inut");
-
       await axiosSecure
         .patch(`/api/v1/admin/order/delivary/${data._id}`, { statusData })
         .then((response) => {
-          console.log(response);
           if (response) {
             reset();
             refetch();
+            setIsLoading(false);
             SuccessToast("Change Success");
           }
         });
@@ -177,59 +171,63 @@ const OrderDeliveryModal = ({
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Order Delivery">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col mb-5">
-          <label htmlFor="title" className="mb-2">
-            Assign to {data?.uId}
-          </label>
-          <label htmlFor="title" className="mb-2 font-bold text-red-600">
-            Please Select Delivary Type
-          </label>
-          <select
-            {...register("deliveryType")}
-            onChange={(e) => setDeliveryType(e.target.value)}
-            className="select select-bordered w-full mb-5">
-            <option value="Website">Website</option>
-            <option value="Apps">Apps</option>
-          </select>
-
-          {deliveryTypeFields()}
-
-          <div className="flex flex-col mb-3">
-            <label htmlFor="videoLink" className="mb-2">
-              Video Link
+      {isLoading ? (
+        <ScreenLoad />
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col mb-5">
+            <label htmlFor="title" className="mb-2">
+              Assign to {data?.uId}
             </label>
-            <input
-              type="text"
-              {...register("videoLink")}
-              placeholder="Enter Video Link"
-              className="input input-bordered w-full"
-            />
-          </div>
-          <div className="flex flex-col mb-3">
-            <label htmlFor="note" className="mb-2">
-              Note
+            <label htmlFor="title" className="mb-2 font-bold text-red-600">
+              Please Select Delivary Type
             </label>
-            <textarea
-              {...register("note")}
-              placeholder="Enter any additional notes"
-              className="textarea textarea-bordered w-full"></textarea>
+            <select
+              {...register("deliveryType")}
+              onChange={(e) => setDeliveryType(e.target.value)}
+              className="select select-bordered w-full mb-5">
+              <option value="Website">Website</option>
+              <option value="Apps">Apps</option>
+            </select>
+
+            {deliveryTypeFields()}
+
+            <div className="flex flex-col mb-3">
+              <label htmlFor="videoLink" className="mb-2">
+                Video Link
+              </label>
+              <input
+                type="text"
+                {...register("videoLink")}
+                placeholder="Enter Video Link"
+                className="input input-bordered w-full"
+              />
+            </div>
+            <div className="flex flex-col mb-3">
+              <label htmlFor="note" className="mb-2">
+                Note
+              </label>
+              <textarea
+                {...register("note")}
+                placeholder="Enter any additional notes"
+                className="textarea textarea-bordered w-full"></textarea>
+            </div>
           </div>
-        </div>
-        <div className="flex gap-3 justify-end">
-          <button
-            onClick={() => onCancel()}
-            type="button"
-            className="btn btn-danger ">
-            Cancel
-          </button>
-          {!isLoading && (
-            <button type="submit" className="btn btn-success text-white ">
-              Submit
+          <div className="flex gap-3 justify-end">
+            <button
+              onClick={() => onCancel()}
+              type="button"
+              className="btn btn-danger ">
+              Cancel
             </button>
-          )}
-        </div>
-      </form>
+            {!isLoading && (
+              <button type="submit" className="btn btn-success text-white ">
+                Submit
+              </button>
+            )}
+          </div>
+        </form>
+      )}
     </Modal>
   );
 };
